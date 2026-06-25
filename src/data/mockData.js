@@ -1,0 +1,63 @@
+/* Mock data pulled from the existing dashboard screens.
+   Swap these arrays for live API responses later — shape stays same. */
+
+export const kpi = {
+  orgHealth: 90,          // weighted completion %
+  totalTasks: 5392,
+  done: 5372,
+  overdue: 12,
+  todo: 19,
+  inProgress: 1,
+  activeProjects: 13,
+}
+
+export const departments = [
+  { name: 'Banking & Financial Services', head: 'Md. Mohiuddin Tawfik', projects: 1, total: 1,    todo: 0,  wip: 0, done: 1,    overdue: 0,  stuck: 0, completion: 100,   flag: 'Good' },
+  { name: 'Data',                          head: 'Kalyan Banik',        projects: 1, total: 185,  todo: 0,  wip: 0, done: 185,  overdue: 0,  stuck: 0, completion: 100,   flag: 'Good' },
+  { name: 'Engineering',                   head: 'Ashekur Rahman Molla',projects: 6, total: 4598, todo: 10, wip: 0, done: 4588, overdue: 10, stuck: 0, completion: 99.78, flag: 'Warning' },
+  { name: 'Innovation Center of Excellence',head: 'Md. Taukir Hasan',   projects: 1, total: 16,   todo: 0,  wip: 0, done: 16,   overdue: 0,  stuck: 0, completion: 100,   flag: 'Good' },
+  { name: 'Project Management Office',     head: 'Mohammad Ashfaque Ali',projects: 4,total: 214,  todo: 0,  wip: 0, done: 214,  overdue: 0,  stuck: 0, completion: 100,   flag: 'Good' },
+  { name: 'Service Assurance',             head: '—',                   projects: 1, total: 17,   todo: 0,  wip: 0, done: 17,   overdue: 0,  stuck: 0, completion: 100,   flag: 'Good' },
+  { name: 'Service Assurance-Quality',     head: 'Md. Amimul Islam',    projects: 4, total: 361,  todo: 9,  wip: 1, done: 351,  overdue: 2,  stuck: 0, completion: 97.23, flag: 'Warning' },
+]
+
+export const employees = [
+  { name: 'A. N. M. Ariful Haque', dept: 'Engineering',              projects: 1, assigned: 3,    todo: 0, wip: 0, done: 3,    overdue: 0, stuck: 0, completion: 100, status: 'Good' },
+  { name: 'Abdullah Al Mahmud',    dept: 'Engineering',              projects: 1, assigned: 27,   todo: 0, wip: 0, done: 27,   overdue: 0, stuck: 0, completion: 100, status: 'Good' },
+  { name: 'Alimoon Nisha',         dept: 'Engineering',              projects: 2, assigned: 17,   todo: 0, wip: 0, done: 17,   overdue: 0, stuck: 0, completion: 100, status: 'Good' },
+  { name: 'Aminur Rashid Iffy',    dept: 'Service Assurance-Quality',projects: 3, assigned: 211,  todo: 0, wip: 0, done: 211,  overdue: 0, stuck: 0, completion: 100, status: 'Good' },
+  { name: 'Anisur Rahman',         dept: 'Engineering',              projects: 1, assigned: 145,  todo: 0, wip: 0, done: 145,  overdue: 0, stuck: 0, completion: 100, status: 'Good' },
+  { name: 'Ariful Islam',          dept: 'Engineering',              projects: 1, assigned: 1291, todo: 0, wip: 0, done: 1291, overdue: 0, stuck: 0, completion: 100, status: 'Good' },
+  { name: 'Ashekur Rahman Molla',  dept: 'Engineering',              projects: 1, assigned: 2,    todo: 0, wip: 0, done: 2,    overdue: 0, stuck: 0, completion: 100, status: 'Good' },
+  { name: 'Asif Mohammed Malik',   dept: 'Engineering',              projects: 2, assigned: 5,    todo: 0, wip: 0, done: 5,    overdue: 0, stuck: 0, completion: 100, status: 'Good' },
+  { name: 'Fardin Rahman',         dept: 'Engineering',              projects: 1, assigned: 41,   todo: 0, wip: 0, done: 41,   overdue: 0, stuck: 0, completion: 100, status: 'Good' },
+  { name: 'Hasheme Al Rafsun',     dept: 'Service Assurance-Quality',projects: 1, assigned: 2,    todo: 0, wip: 0, done: 2,    overdue: 0, stuck: 0, completion: 100, status: 'Good' },
+]
+
+export const projects = [
+  { name: 'HERCULES 2.0', code: '21762', type: 'R&D',          service: 'Ad-hoc Design/Content', dept: 'Engineering', responsible: 'Md. Bakhtiar Alam', value: '100%', client: 'N/A',                tasks: 2, overdue: 2, stuck: 0, done: 0,  status: 'Active' },
+  { name: 'PCI-DSS',      code: '0001',  type: 'R&D',          service: 'Ad-hoc Design/Content', dept: 'Engineering', responsible: 'Md. Bakhtiar Alam', value: '100%', client: 'N/A',                tasks: 1, overdue: 1, stuck: 0, done: 0,  status: 'Active' },
+  { name: 'Vendor',       code: 'N/A',   type: 'R&D',          service: 'Ad-hoc Design/Content', dept: 'Engineering', responsible: 'Md. Bakhtiar Alam', value: '100%', client: 'N/A',                tasks: 0, overdue: 0, stuck: 0, done: 0,  status: 'Active' },
+  { name: 'Monthly Dev',  code: 'N/A',   type: 'Partnership',  service: 'Agent Portal',          dept: 'Engineering', responsible: 'Md. Bakhtiar Alam', value: '1395%',client: 'Sweet Dream Mgmt',   tasks: 1, overdue: 0, stuck: 1, done: 0,  status: 'Active' },
+  { name: 'Modish Proj 2',code: 'N/A',   type: 'Pilot',        service: 'AMC maintenance',       dept: 'Engineering', responsible: 'Md. Bakhtiar Alam', value: '100%', client: 'N/A',                tasks: 0, overdue: 0, stuck: 0, done: 0,  status: 'Active' },
+  { name: 'JTS Call Center',code:'N/A',  type: 'Pilot',        service: 'Knowledge Development', dept: 'Engineering', responsible: 'Md. Mahmud Hossain Bhuyan', value: '100%', client: 'N/A',           tasks: 0, overdue: 0, stuck: 0, done: 0,  status: 'Active' },
+  { name: 'ELCOMMERZ',    code: 'N/A',   type: 'Partnership',  service: 'N/A',                   dept: 'Engineering', responsible: 'Md. Mahmud Hossain Bhuyan', value: '100%', client: 'Lankabangla Finance', tasks: 0, overdue: 0, stuck: 0, done: 0, status: 'Active' },
+]
+
+/* Cost-burn vs delivery trend (6 months) */
+export const trend = [
+  { month: 'Jan', delivery: 30,  burn: 20 },
+  { month: 'Feb', delivery: 40,  burn: 35 },
+  { month: 'Mar', delivery: 65,  burn: 45 },
+  { month: 'Apr', delivery: 60,  burn: 70 },
+  { month: 'May', delivery: 90,  burn: 75 },
+  { month: 'Jun', delivery: 115, burn: 88 },
+]
+
+/* Task status split for donut */
+export const taskSplit = [
+  { name: 'Done',        value: 5372, color: 'var(--good)' },
+  { name: 'To-Do',       value: 19,   color: 'var(--warn)' },
+  { name: 'Overdue',     value: 12,   color: 'var(--danger)' },
+  { name: 'In Progress', value: 1,    color: 'var(--info)' },
+]

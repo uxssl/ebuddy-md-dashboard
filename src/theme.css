@@ -1,0 +1,155 @@
+/* ============================================================
+   DESIGN TOKENS — single source of truth.
+   Change here = change everywhere. Do NOT hardcode colors/sizes
+   anywhere else. This keeps design language locked across pages.
+   ============================================================ */
+:root {
+  /* Brand */
+  --primary:      #0B3D5C;
+  --primary-700:  #072A40;
+  --primary-400:  #1B6CA8;
+  --accent:       #00B4A6;
+
+  /* Status */
+  --good:    #22C55E;
+  --warn:    #F59E0B;
+  --danger:  #EF4444;
+  --purple:  #8B5CF6;
+  --info:    #1B6CA8;
+
+  /* Status soft backgrounds */
+  --good-bg:   #E7F8EF;
+  --warn-bg:   #FEF6E7;
+  --danger-bg: #FDECEA;
+
+  /* Neutrals */
+  --ink:      #0F1B2D;
+  --muted:    #7A8699;
+  --line:     #E9EDF3;
+  --surface:  #FFFFFF;
+  --bg:       #F4F6FA;
+
+  /* Radius */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 18px;
+
+  /* Spacing (4px base) */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px;
+  --s-4: 16px; --s-5: 20px; --s-6: 24px;
+
+  /* Shadow */
+  --shadow-sm: 0 1px 2px rgba(16,27,45,.04);
+  --shadow-md: 0 6px 18px rgba(16,27,45,.08);
+
+  /* Layout */
+  --sidebar-w: 248px;
+  --topbar-h: 64px;
+
+  /* Type */
+  --font: 'Inter', 'Segoe UI', system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body, #root { height: 100%; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+}
+
+a { text-decoration: none; color: inherit; }
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: #d4dbe6; border-radius: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+
+/* ---------- Reusable utility classes ---------- */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: var(--s-4) var(--s-5);
+  box-shadow: var(--shadow-sm);
+}
+
+.card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: var(--s-3);
+}
+.card-title { font-size: 14px; font-weight: 700; }
+.card-sub { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+.tag {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.tag-good   { background: var(--good-bg);   color: var(--good); }
+.tag-warn   { background: var(--warn-bg);   color: var(--warn); }
+.tag-danger { background: var(--danger-bg); color: var(--danger); }
+.tag-info   { background: #E8F1FA;          color: var(--info); }
+
+/* Grid helpers */
+.grid { display: grid; gap: var(--s-4); }
+
+/* Status badge (tables) */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 6px;
+}
+.badge::before { content:''; width:6px; height:6px; border-radius:50%; background: currentColor; }
+.badge-good   { background: var(--good-bg);   color: var(--good); }
+.badge-warn   { background: var(--warn-bg);   color: var(--warn); }
+.badge-danger { background: var(--danger-bg); color: var(--danger); }
+
+/* Data table */
+.table-wrap { overflow-x: auto; }
+table.data {
+  width: 100%;
+  border-collapse: collapse;
+}
+table.data thead th {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  color: var(--muted);
+  font-weight: 700;
+  text-align: left;
+  padding: 10px 12px;
+  background: #F7F9FC;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+table.data thead th:first-child { border-top-left-radius: var(--r-sm); }
+table.data thead th:last-child  { border-top-right-radius: var(--r-sm); }
+table.data tbody td {
+  font-size: 12.5px;
+  padding: 11px 12px;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+}
+table.data tbody tr:hover { background: #FAFCFE; }
+table.data tbody tr:last-child td { border-bottom: 0; }
+.t-num { font-variant-numeric: tabular-nums; }
+.t-danger { color: var(--danger); font-weight: 700; }
+.t-good   { color: var(--good); font-weight: 700; }
+.t-muted  { color: var(--muted); }
+
+.page-title { font-size: 20px; font-weight: 800; letter-spacing: -.4px; }
+.page-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }

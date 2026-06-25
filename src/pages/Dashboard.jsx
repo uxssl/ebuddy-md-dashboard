@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef } from 'react'
 import {
   ResponsiveContainer, PieChart, Pie, Cell, Tooltip,
   AreaChart, Area, XAxis, YAxis, CartesianGrid,
@@ -53,24 +54,117 @@ function Pagination({ count = 2 }) {
 
 const LAST_IDX = productivityTrend.length - 1
 
+/* How many department tiles to show, by the card's own rendered width */
+const WORKLOAD_BREAKS = [
+  { min: 600, n: 4 },
+  { min: 0,   n: 3 },
+]
+const workloadVisible = w => (WORKLOAD_BREAKS.find(b => w > b.min) || { n: 3 }).n
+
+function WorkloadBar() {
+  const [open, setOpen] = useState(false)
+  const [w, setW] = useState(1200)
+  const ref = useRef(null)
+
+  useEffect(() => {
+    if (!ref.current) return
+    const ro = new ResizeObserver(entries => {
+      const cw = entries[0]?.contentRect.width
+      if (cw) setW(cw)
+    })
+    ro.observe(ref.current)
+    return () => ro.disconnect()
+  }, [])
+
+  const count = workloadVisible(w)
+  const top = workloadDist.slice(0, count)
+  const rest = workloadDist.slice(count)
+  const hasMore = rest.length > 0
+  const restPct = rest.reduce((s, d) => s + d.pct, 0)
+  const restTasks = rest.reduce((s, d) => s + d.tasks, 0)
+
+  const segments = hasMore
+    ? [...top, {
+        dept: open ? 'Show less' : `+${rest.length} more`,
+        pct: Math.max(restPct, 8),
+        tasks: restTasks, bg: '#334155', isOthers: true,
+      }]
+    : top
+
+  return (
+    <div ref={ref}>
+      <div style={{ display: 'flex', gap: 4, height: 140, marginBottom: open ? 12 : 0 }}>
+        {segments.map(d => {
+          const pctVal = d.isOthers ? restPct : d.pct
+          const taskVal = d.isOthers ? restTasks : d.tasks
+          const nameTxt = d.isOthers ? (open ? '↑ Show less' : `+${rest.length} more`) : d.dept
+          return (
+            <div
+              key={d.dept}
+              title={d.isOthers ? `${rest.length} more · ${restPct}% · ${restTasks} tasks` : `${d.dept} — ${d.pct}% · ${d.tasks} tasks`}
+              onClick={d.isOthers ? () => setOpen(o => !o) : undefined}
+              style={{
+                flex: `${d.isOthers ? Math.min(pctVal, 12) : pctVal} 1 0`, minWidth: 0,
+                background: d.isOthers
+                  ? 'linear-gradient(135deg, #334155 0%, #0F172A 100%)'
+                  : `linear-gradient(145deg, ${d.bg} 0%, ${d.bg}DD 100%)`,
+                border: d.isOthers ? '1px dashed rgba(255,255,255,.45)' : 'none',
+                borderRadius: 12, padding: '16px 18px', color: '#fff', overflow: 'hidden',
+                display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
+                cursor: d.isOthers ? 'pointer' : 'default',
+                transition: 'flex .2s',
+              }}
+            >
+              <div style={{ fontSize: 14, fontWeight: 600, opacity: 0.96, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                {nameTxt}
+              </div>
+              <div>
+                <div style={{ fontSize: 22, fontWeight: 800, lineHeight: 1 }}>{pctVal}%</div>
+                <div style={{ fontSize: 10, opacity: 0.82, marginTop: 3, whiteSpace: 'nowrap' }}>{taskVal} Tasks</div>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+
+      {open && hasMore && (
+        <div style={{
+          display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
+          gap: '8px 18px',
+        }}>
+          {rest.map(d => (
+            <div key={d.dept} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12 }}>
+              <span style={{ width: 10, height: 10, borderRadius: 3, background: d.bg, flexShrink: 0 }} />
+              <span style={{ flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{d.dept}</span>
+              <span style={{ fontWeight: 700 }}>{d.pct}%</span>
+              <span style={{ color: C.muted, fontSize: 11, minWidth: 28, textAlign: 'right' }}>{d.tasks}</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
 export default function Dashboard() {
   return (
     <>
 
       {/* ROW 1 — Project Status Overview | Workload Distribution */}
-      <div className="grid dash-grid-a" style={{ marginBottom: 'var(--s-4)' }}>
+      <div className="grid dash-grid-a" style={{ marginBottom: 10 }}>
 
         {/* Project Status Overview */}
         <ChartCard title="Project Status Overview">
-          <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
             <div style={{ position: 'relative', width: 156, height: 156, flexShrink: 0 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
                     data={projectStatus.filter(s => s.value > 0)}
                     dataKey="value"
-                    innerRadius={50} outerRadius={72}
-                    paddingAngle={2} stroke="none"
+                    innerRadius={52} outerRadius={72}
+                    paddingAngle={1.5} cornerRadius={3}
+                    stroke="none"
                   >
                     {projectStatus.filter(s => s.value > 0).map((s, i) => (
                       <Cell key={i} fill={s.color} />
@@ -84,18 +178,18 @@ export default function Dashboard() {
                 display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
                 pointerEvents: 'none',
               }}>
-                <div style={{ fontSize: 28, fontWeight: 800, lineHeight: 1 }}>{totalProjects}</div>
-                <div style={{ fontSize: 9.5, color: C.muted, marginTop: 3 }}>Total Projects</div>
+                <div style={{ fontSize: 30, fontWeight: 800, lineHeight: 1 }}>{totalProjects}</div>
+                <div style={{ fontSize: 10, color: C.muted, marginTop: 3, letterSpacing: 0.2 }}>Total Projects</div>
               </div>
             </div>
 
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 9 }}>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 6 }}>
               {projectStatus.map(s => (
-                <div key={s.name} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <span style={{ width: 8, height: 8, borderRadius: '50%', background: s.color, flexShrink: 0 }} />
-                  <span style={{ flex: 1, fontSize: 12 }}>{s.name}</span>
-                  <span style={{ fontSize: 12, fontWeight: 700, minWidth: 34, textAlign: 'right' }}>{s.pct}%</span>
-                  <span style={{ fontSize: 11, color: C.muted, minWidth: 24, textAlign: 'right' }}>({s.value})</span>
+                <div key={s.name} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <span style={{ width: 10, height: 10, borderRadius: '50%', background: s.color, flexShrink: 0 }} />
+                  <span style={{ flex: 1, fontSize: 13 }}>{s.name}</span>
+                  <span style={{ fontSize: 13, fontWeight: 700, minWidth: 38, textAlign: 'right' }}>{s.pct}%</span>
+                  <span style={{ fontSize: 12, color: C.muted, minWidth: 26, textAlign: 'right' }}>({s.value})</span>
                 </div>
               ))}
             </div>
@@ -104,34 +198,16 @@ export default function Dashboard() {
 
         {/* Workload Distribution */}
         <ChartCard title="Workload Distribution" sub="Tasks distribution by department">
-          <div className="workload-cards">
-            {workloadDist.map(d => (
-              <div key={d.dept} style={{
-                flex: d.pct,
-                background: `linear-gradient(145deg, ${d.bg} 0%, ${d.bg}DD 100%)`,
-                borderRadius: 16, padding: '16px 14px 14px', color: 'white',
-                boxShadow: `0 4px 16px ${d.bg}44`,
-              }}>
-                <div style={{ fontSize: 11, opacity: 0.88, marginBottom: 4 }}>{d.dept}</div>
-                <div style={{ fontSize: 24, fontWeight: 800, lineHeight: 1.1, marginBottom: 4 }}>{d.pct}%</div>
-                <div style={{ fontSize: 10.5, opacity: 0.82 }}>{d.tasks} Tasks</div>
-              </div>
-            ))}
-          </div>
-          <div style={{ textAlign: 'right' }}>
-            <span style={{ fontSize: 12, color: C.primary400, fontWeight: 600, cursor: 'pointer' }}>
-              View workload report →
-            </span>
-          </div>
+          <WorkloadBar />
         </ChartCard>
       </div>
 
-      {/* ROW 2 — Revenue Analytics (chart) | Revenue vs Cost Burned (chart) */}
-      <div className="grid dash-grid-b" style={{ marginBottom: 'var(--s-4)' }}>
+      {/* ROW 2 — Revenue Analytics | Revenue vs Cost Burned */}
+      <div className="grid dash-grid-b" style={{ marginBottom: 10 }}>
 
         {/* Revenue Analytics — horizontal bar by project */}
         <ChartCard title="Revenue Analytics" sub="Revenue by project">
-          <ResponsiveContainer width="100%" height={280}>
+          <ResponsiveContainer width="100%" height={240}>
             <BarChart data={revenueMatrix.items} layout="vertical" margin={{ left: 8, right: 56, top: 4, bottom: 4 }}>
               <CartesianGrid horizontal={false} stroke={C.grid} />
               <XAxis
@@ -158,39 +234,31 @@ export default function Dashboard() {
         <ChartCard title="Revenue vs Cost Burned" sub="Last 6 months (৳K)">
           <div style={{ display: 'flex', gap: 18, marginBottom: 6 }}>
             <span style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: C.muted }}>
-              <span style={{ width: 9, height: 9, borderRadius: '50%', background: '#34D3A6' }} /> Revenue
+              <span style={{ width: 9, height: 9, borderRadius: '50%', background: '#69D389' }} /> Revenue
             </span>
             <span style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: C.muted }}>
-              <span style={{ width: 9, height: 9, borderRadius: '50%', background: C.danger }} /> Cost Burned
+              <span style={{ width: 9, height: 9, borderRadius: '50%', background: '#EF5350' }} /> Cost Burned
             </span>
           </div>
-          <ResponsiveContainer width="100%" height={248}>
-            <AreaChart data={revenueVsCost} margin={{ left: 0, right: 12, top: 8, bottom: 0 }}>
-              <defs>
-                <linearGradient id="gRev" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#34D3A6" stopOpacity={0.25} />
-                  <stop offset="100%" stopColor="#34D3A6" stopOpacity={0} />
-                </linearGradient>
-                <linearGradient id="gCost" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor={C.danger} stopOpacity={0.18} />
-                  <stop offset="100%" stopColor={C.danger} stopOpacity={0} />
-                </linearGradient>
-              </defs>
+          <ResponsiveContainer width="100%" height={210}>
+            <BarChart data={revenueVsCost} margin={{ left: 0, right: 12, top: 8, bottom: 0 }} barGap={4} barCategoryGap="28%">
               <CartesianGrid vertical={false} stroke={C.grid} />
               <XAxis dataKey="month" tick={{ fontSize: 11, fill: C.muted }} axisLine={false} tickLine={false} />
               <YAxis tickFormatter={v => `৳${v}k`} tick={{ fontSize: 10, fill: C.muted }} axisLine={false} tickLine={false} width={46} />
-              <Tooltip formatter={(v, n) => [`৳${v}k`, n === 'revenue' ? 'Revenue' : 'Cost Burned']} />
-              <Area type="monotone" dataKey="revenue" stroke="#34D3A6" strokeWidth={2.5} fill="url(#gRev)" />
-              <Area type="monotone" dataKey="cost" stroke={C.danger} strokeWidth={2.5} fill="url(#gCost)" />
-            </AreaChart>
+              <Tooltip formatter={(v, n) => [`৳${v}k`, n === 'revenue' ? 'Revenue' : 'Cost Burned']} cursor={{ fill: 'rgba(108,92,231,.06)' }} />
+              <Bar dataKey="revenue" fill="#69D389" radius={[4, 4, 0, 0]} maxBarSize={22} />
+              <Bar dataKey="cost" fill="#EF5350" radius={[4, 4, 0, 0]} maxBarSize={22} />
+            </BarChart>
           </ResponsiveContainer>
         </ChartCard>
       </div>
 
-      {/* ROW 3 — Team Productivity Trend (chart, full width) */}
-      <div style={{ marginBottom: 'var(--s-4)' }}>
+      {/* ROW 3 — Team Productivity Trend | Department Task Overview */}
+      <div className="grid dash-grid-b" style={{ marginBottom: 10 }}>
+
+        {/* Team Productivity Trend */}
         <ChartCard title="Team Productivity Trend" sub="Average task completion % (Last 6 Months)">
-          <ResponsiveContainer width="100%" height={228}>
+          <ResponsiveContainer width="100%" height={200}>
             <AreaChart data={productivityTrend} margin={{ left: 0, right: 12, top: 54, bottom: 0 }}>
               <defs>
                 <linearGradient id="gProd" x1="0" y1="0" x2="0" y2="1">
@@ -235,48 +303,6 @@ export default function Dashboard() {
               />
             </AreaChart>
           </ResponsiveContainer>
-          <div style={{ textAlign: 'right', marginTop: 4 }}>
-            <span style={{ fontSize: 12, color: C.primary400, fontWeight: 600, cursor: 'pointer' }}>
-              View productivity report →
-            </span>
-          </div>
-        </ChartCard>
-      </div>
-
-      {/* ROW 4 — Projects by Overdue Tasks (table) | Department Task Overview (table) */}
-      <div className="grid dash-grid-b" style={{ marginBottom: 'var(--s-4)' }}>
-
-        {/* Projects by Overdue Tasks */}
-        <ChartCard title="Projects by Overdue Tasks" sub="Cost burned on delayed work">
-          <div className="table-wrap">
-            <table className="data">
-              <thead>
-                <tr>
-                  <th>Project</th>
-                  <th className="t-num">Total Tasks</th>
-                  <th className="t-num">Overdue Tasks</th>
-                  <th>Time Taken</th>
-                  <th>Risk Level</th>
-                  <th className="t-num">Cost Burned</th>
-                  <th>Completion</th>
-                </tr>
-              </thead>
-              <tbody>
-                {projectsOverdue.map(p => (
-                  <tr key={p.name}>
-                    <td style={{ fontWeight: 600 }}>{p.name}</td>
-                    <td className="t-num">{p.total}</td>
-                    <td className="t-num t-danger">{p.overdue}</td>
-                    <td className="t-muted">{p.timeTaken}</td>
-                    <td><span className="badge badge-danger">{p.risk}</span></td>
-                    <td className="t-num" style={{ fontWeight: 600 }}>৳{fmt(p.costBurned)}</td>
-                    <td style={{ minWidth: 90 }}><ProgressBar value={p.completion} /></td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <Pagination />
         </ChartCard>
 
         {/* Department Task Overview */}
@@ -315,21 +341,55 @@ export default function Dashboard() {
               </tbody>
             </table>
           </div>
-          <Pagination />
+          <Pagination count={4} />
         </ChartCard>
       </div>
 
-      {/* ROW 5 — Top Employees by Overdue Tasks (table, full width) */}
-      <div>
+      {/* ROW 4 — Projects by Overdue | Top Employees */}
+      <div className="grid dash-grid-b" style={{ marginBottom: 10 }}>
+
+        {/* Projects by Overdue Tasks */}
+        <ChartCard title="Projects by Overdue Tasks" sub="Cost burned on delayed work">
+          <div className="table-wrap">
+            <table className="data">
+              <thead>
+                <tr>
+                  <th>Project</th>
+                  <th className="t-num">Total Tasks</th>
+                  <th className="t-num">Overdue Tasks</th>
+                  <th>Time Taken</th>
+                  <th>Risk Level</th>
+                  <th className="t-num">Cost Burned</th>
+                  <th>Completion</th>
+                </tr>
+              </thead>
+              <tbody>
+                {projectsOverdue.map(p => (
+                  <tr key={p.name}>
+                    <td style={{ fontWeight: 600 }}>{p.name}</td>
+                    <td className="t-num">{p.total}</td>
+                    <td className="t-num t-danger">{p.overdue}</td>
+                    <td className="t-muted">{p.timeTaken}</td>
+                    <td><span className="badge badge-danger">{p.risk}</span></td>
+                    <td className="t-num" style={{ fontWeight: 600 }}>৳{fmt(p.costBurned)}</td>
+                    <td style={{ minWidth: 90 }}><ProgressBar value={p.completion} /></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <Pagination count={4} />
+        </ChartCard>
+
         <ChartCard title="Top Employees by Overdue Tasks" sub="Highest overdue task count this month">
           <div className="table-wrap">
             <table className="data">
               <thead>
                 <tr>
                   <th>Employee</th>
-                  <th className="t-num">Total Tasks</th>
-                  <th className="t-num">Done Tasks</th>
-                  <th className="t-num">Overdue Tasks</th>
+                  <th className="t-num">Total</th>
+                  <th className="t-num">Done</th>
+                  <th className="t-num">Overdue</th>
                   <th>Completion</th>
                 </tr>
               </thead>
@@ -358,7 +418,7 @@ export default function Dashboard() {
               </tbody>
             </table>
           </div>
-          <Pagination />
+          <Pagination count={4} />
         </ChartCard>
       </div>
     </>

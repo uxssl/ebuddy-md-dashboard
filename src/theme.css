@@ -46,7 +46,7 @@
   --topbar-h: 60px;
 
   /* Type */
-  --font: 'Inter', system-ui, -apple-system, sans-serif;
+  --font: 'Geist', system-ui, -apple-system, sans-serif;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -76,8 +76,8 @@ a { text-decoration: none; color: inherit; }
   background: rgba(255,255,255,.58);
   backdrop-filter: blur(20px) saturate(160%);
   -webkit-backdrop-filter: blur(20px) saturate(160%);
-  border-radius: 20px;
-  padding: var(--s-5) var(--s-6);
+  border-radius: 16px;
+  padding: 14px 18px;
   box-shadow:
     0 8px 32px rgba(13,43,69,.10),
     0 2px 6px rgba(0,0,0,.05),
@@ -90,7 +90,7 @@ a { text-decoration: none; color: inherit; }
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  margin-bottom: var(--s-3);
+  margin-bottom: 8px;
 }
 .card-title { font-size: 13.5px; font-weight: 700; letter-spacing: -.2px; }
 .card-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
@@ -109,7 +109,7 @@ a { text-decoration: none; color: inherit; }
 .tag-info   { background: #E3F2FD;          color: var(--info); }
 
 /* Grid helpers */
-.grid { display: grid; gap: var(--s-4); }
+.grid { display: grid; gap: var(--s-3); }
 /* Allow grid items to shrink below content width so inner
    overflow-x wrappers (tables, workload cards) contain themselves
    instead of blowing the track out and scrolling the whole page. */
@@ -147,13 +147,13 @@ table.data thead th {
   color: var(--muted);
   font-weight: 700;
   text-align: left;
-  padding: 8px 16px 12px;
+  padding: 6px 12px 8px;
   border-bottom: 1px solid var(--line);
   white-space: nowrap;
 }
 table.data tbody td {
-  font-size: 13px;
-  padding: 15px 16px;
+  font-size: 12px;
+  padding: 9px 12px;
   border-bottom: 1px solid rgba(13,43,69,.05);
   color: var(--ink);
   vertical-align: middle;
@@ -205,6 +205,11 @@ table.data tbody tr:last-child td { border-bottom: 0; }
 /* Responsive dashboard grid helpers */
 .dash-grid-a { grid-template-columns: 1fr 1.6fr; }
 .dash-grid-b { grid-template-columns: 1fr 1fr; }
+.dash-grid-c { grid-template-columns: 1fr 1fr 1fr; }
+
+@media (max-width: 1200px) {
+  .dash-grid-c { grid-template-columns: 1fr 1fr; }
+}
 
 @media (max-width: 1024px) {
   .dash-grid-a { grid-template-columns: 1fr 1.2fr; }
@@ -213,11 +218,11 @@ table.data tbody tr:last-child td { border-bottom: 0; }
 
 @media (max-width: 860px) {
   .dash-grid-a,
-  .dash-grid-b { grid-template-columns: 1fr; }
+  .dash-grid-b,
+  .dash-grid-c { grid-template-columns: 1fr; }
 }
 
 /* Workload cards scroll on narrow screens */
-.workload-cards { display: flex; gap: 8px; margin-bottom: 10px; overflow-x: auto; }
 .workload-cards::-webkit-scrollbar { height: 3px; }
 .workload-cards::-webkit-scrollbar-thumb { background: rgba(0,0,0,.15); border-radius: 3px; }
 

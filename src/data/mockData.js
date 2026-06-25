@@ -76,30 +76,52 @@ export const totalProjects = 17
 
 /* Workload Distribution — dept cards */
 export const workloadDist = [
-  { dept: 'Engineering',       pct: 42, tasks: 126, bg: '#00ACC1' },
-  { dept: 'QA',                pct: 18, tasks: 54,  bg: '#388E3C' },
-  { dept: 'DevOps',            pct: 12, tasks: 36,  bg: '#546E7A' },
-  { dept: 'Sales & Marketing', pct: 10, tasks: 30,  bg: '#E64A19' },
-  { dept: 'HR',                pct: 10, tasks: 30,  bg: '#AD1457' },
-  { dept: 'Finance',           pct: 8,  tasks: 24,  bg: '#512DA8' },
+  { dept: 'Engineering',                pct: 14, tasks: 126, bg: '#00ACC1' },
+  { dept: 'QA',                         pct: 9,  tasks: 81,  bg: '#388E3C' },
+  { dept: 'Customer Support',           pct: 8,  tasks: 72,  bg: '#F9A825' },
+  { dept: 'DevOps',                     pct: 6,  tasks: 54,  bg: '#E91E63' },
+  { dept: 'Sales & Marketing',          pct: 6,  tasks: 54,  bg: '#E64A19' },
+  { dept: 'Product',                    pct: 6,  tasks: 54,  bg: '#6C5CE7' },
+  { dept: 'Finance & Accounts',         pct: 5,  tasks: 45,  bg: '#512DA8' },
+  { dept: 'Operations',                 pct: 5,  tasks: 45,  bg: '#1565C0' },
+  { dept: 'Information Security',       pct: 5,  tasks: 45,  bg: '#C62828' },
+  { dept: 'Human Resources',            pct: 4,  tasks: 36,  bg: '#AD1457' },
+  { dept: 'Compliance',                 pct: 4,  tasks: 36,  bg: '#2E7D32' },
+  { dept: 'Merchant Onboarding',        pct: 4,  tasks: 36,  bg: '#7B1FA2' },
+  { dept: 'Risk & Fraud',               pct: 4,  tasks: 36,  bg: '#D84315' },
+  { dept: 'Admin',                      pct: 3,  tasks: 27,  bg: '#00897B' },
+  { dept: 'Business Development',       pct: 3,  tasks: 27,  bg: '#00838F' },
+  { dept: 'Settlement & Reconciliation',pct: 3,  tasks: 27,  bg: '#283593' },
+  { dept: 'Network Operations (NOC)',   pct: 3,  tasks: 27,  bg: '#455A64' },
+  { dept: 'Data & Analytics',           pct: 3,  tasks: 27,  bg: '#0277BD' },
+  { dept: 'Legal',                      pct: 2,  tasks: 18,  bg: '#5D4037' },
+  { dept: 'Procurement',                pct: 1,  tasks: 9,   bg: '#9E9D24' },
+  { dept: 'Internal Audit',             pct: 1,  tasks: 9,   bg: '#6D4C41' },
+  { dept: 'PMO',                        pct: 1,  tasks: 9,   bg: '#8E24AA' },
 ]
 
 /* Department Task Overview — table */
 export const deptTaskOverview = [
-  { dept: 'Admin',           projects: 4, total: 0, todo: 0, inProg: 0, done: 0, overdue: 0, stuck: 0, completion: 0 },
-  { dept: 'Human Resources', projects: 2, total: 0, todo: 0, inProg: 0, done: 0, overdue: 0, stuck: 0, completion: 0 },
+  { dept: 'Admin',                    projects: 4, total: 0,    todo: 0,  inProg: 0, done: 0,    overdue: 0,  stuck: 0, completion: 0   },
+  { dept: 'Human Resources',          projects: 2, total: 0,    todo: 0,  inProg: 0, done: 0,    overdue: 0,  stuck: 0, completion: 0   },
+  { dept: 'Engineering',              projects: 6, total: 4598, todo: 10, inProg: 0, done: 4588, overdue: 10, stuck: 0, completion: 99  },
+  { dept: 'Service Assurance-Quality',projects: 4, total: 361,  todo: 9,  inProg: 1, done: 351,  overdue: 2,  stuck: 0, completion: 97  },
 ]
 
 /* Projects by Overdue Tasks — table */
 export const projectsOverdue = [
-  { name: 'HERCULES 2.0', total: 2, overdue: 2, timeTaken: '12d', risk: 'High', costBurned: 2176, completion: 0 },
-  { name: 'PCI-DSS',      total: 1, overdue: 1, timeTaken: '7d',  risk: 'High', costBurned: 1000, completion: 0 },
+  { name: 'HERCULES 2.0', total: 2, overdue: 2, timeTaken: '12d', risk: 'High',   costBurned: 2176, completion: 0  },
+  { name: 'PCI-DSS',      total: 1, overdue: 1, timeTaken: '7d',  risk: 'High',   costBurned: 1000, completion: 0  },
+  { name: 'ELCOMMERZ',    total: 3, overdue: 1, timeTaken: '5d',  risk: 'Medium', costBurned: 850,  completion: 67 },
+  { name: 'Monthly Dev',  total: 5, overdue: 1, timeTaken: '3d',  risk: 'Low',    costBurned: 420,  completion: 80 },
 ]
 
 /* Top Employees by Overdue Tasks — table */
 export const topEmployeesOverdue = [
-  { name: 'Khan Yeasir Arafat', initials: 'KY', avatarBg: '#00ACC1', dept: 'Service Assurance-Quality Assurance', total: 2, done: 0, overdue: 2, completion: 0 },
-  { name: 'Mozbaul Alam',       initials: 'MA', avatarBg: '#757575', dept: 'Engineering',                          total: 1, done: 0, overdue: 1, completion: 0 },
+  { name: 'Khan Yeasir Arafat',  initials: 'KY', avatarBg: '#00ACC1', dept: 'Service Assurance-QA', total: 2,  done: 0,  overdue: 2, completion: 0  },
+  { name: 'Mozbaul Alam',        initials: 'MA', avatarBg: '#757575', dept: 'Engineering',          total: 1,  done: 0,  overdue: 1, completion: 0  },
+  { name: 'Fardin Rahman',       initials: 'FR', avatarBg: '#7B1FA2', dept: 'Engineering',          total: 41, done: 35, overdue: 3, completion: 85 },
+  { name: 'Asif Mohammed Malik', initials: 'AM', avatarBg: '#E64A19', dept: 'Engineering',          total: 5,  done: 3,  overdue: 2, completion: 60 },
 ]
 
 /* Team Productivity Trend — line chart */

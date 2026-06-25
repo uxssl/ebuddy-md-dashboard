@@ -1,16 +1,16 @@
 /* JS mirror of theme.css color tokens.
    Recharts needs real color values (not CSS vars) for SVG fills. */
 export const C = {
-  primary:  '#0B3D5C',
-  primary400:'#1B6CA8',
-  accent:   '#00B4A6',
-  good:     '#22C55E',
-  warn:     '#F59E0B',
-  danger:   '#EF4444',
-  purple:   '#8B5CF6',
-  info:     '#1B6CA8',
-  ink:      '#0F1B2D',
-  muted:    '#7A8699',
-  line:     '#E9EDF3',
-  grid:     '#EEF2F7',
+  primary:   '#0D2B45',
+  primary400:'#1565C0',
+  accent:    '#00ACC1',
+  good:      '#2E7D32',
+  warn:      '#EF6C00',
+  danger:    '#C62828',
+  purple:    '#6A1B9A',
+  info:      '#0277BD',
+  ink:       '#212121',
+  muted:     '#757575',
+  line:      '#E0E0E0',
+  grid:      '#EEEEEE',
 }

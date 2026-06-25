@@ -21,8 +21,9 @@ export default function Projects() {
             <thead>
               <tr>
                 <th>Project</th><th>Code</th><th>Type</th><th>Service</th>
-                <th>Department</th><th>Responsible</th><th>Value</th><th>Client</th>
-                <th>Tasks</th><th>Overdue</th><th>Stuck</th><th>Status</th>
+                <th>Department</th><th>Responsible</th><th className="t-num">Value</th><th>Client</th>
+                <th className="t-num">Tasks</th><th className="t-num">Overdue</th>
+                <th className="t-num">Stuck</th><th>Status</th>
               </tr>
             </thead>
             <tbody>

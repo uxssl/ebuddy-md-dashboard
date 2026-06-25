@@ -1,54 +1,52 @@
 /* ============================================================
-   DESIGN TOKENS — single source of truth.
-   Change here = change everywhere. Do NOT hardcode colors/sizes
-   anywhere else. This keeps design language locked across pages.
+   DESIGN TOKENS — Material Design color palette
    ============================================================ */
 :root {
   /* Brand */
-  --primary:      #0B3D5C;
-  --primary-700:  #072A40;
-  --primary-400:  #1B6CA8;
-  --accent:       #00B4A6;
+  --primary:      #0D2B45;
+  --primary-700:  #071E32;
+  --primary-400:  #1565C0;
+  --accent:       #00ACC1;
 
   /* Status */
-  --good:    #22C55E;
-  --warn:    #F59E0B;
-  --danger:  #EF4444;
-  --purple:  #8B5CF6;
-  --info:    #1B6CA8;
+  --good:    #2E7D32;
+  --warn:    #EF6C00;
+  --danger:  #C62828;
+  --purple:  #6A1B9A;
+  --info:    #0277BD;
 
   /* Status soft backgrounds */
-  --good-bg:   #E7F8EF;
-  --warn-bg:   #FEF6E7;
-  --danger-bg: #FDECEA;
+  --good-bg:   #E8F5E9;
+  --warn-bg:   #FFF3E0;
+  --danger-bg: #FFEBEE;
 
   /* Neutrals */
-  --ink:      #0F1B2D;
-  --muted:    #7A8699;
-  --line:     #E9EDF3;
+  --ink:      #212121;
+  --muted:    #757575;
+  --line:     #E0E0E0;
   --surface:  #FFFFFF;
-  --bg:       #F4F6FA;
+  --bg:       #ECEEF3;
 
   /* Radius */
   --r-sm: 8px;
   --r-md: 12px;
   --r-lg: 16px;
-  --r-xl: 18px;
+  --r-xl: 20px;
 
   /* Spacing (4px base) */
   --s-1: 4px;  --s-2: 8px;  --s-3: 12px;
   --s-4: 16px; --s-5: 20px; --s-6: 24px;
 
-  /* Shadow */
-  --shadow-sm: 0 1px 2px rgba(16,27,45,.04);
-  --shadow-md: 0 6px 18px rgba(16,27,45,.08);
+  /* Shadow — Material Design elevation */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,.10), 0 2px 4px rgba(0,0,0,.06);
 
   /* Layout */
-  --sidebar-w: 248px;
-  --topbar-h: 64px;
+  --sidebar-w: 68px;
+  --topbar-h: 60px;
 
   /* Type */
-  --font: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -58,26 +56,35 @@ html, body, #root { height: 100%; }
 body {
   font-family: var(--font);
   background: var(--bg);
+  background-image: radial-gradient(#C2C8D4 1px, transparent 1px);
+  background-size: 22px 22px;
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
   font-size: 14px;
+  font-feature-settings: 'cv11', 'ss01';
 }
 
 a { text-decoration: none; color: inherit; }
 
-::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-thumb { background: #d4dbe6; border-radius: 8px; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-thumb { background: #BDBDBD; border-radius: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 
 /* ---------- Reusable utility classes ---------- */
 
 .card {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--r-lg);
-  padding: var(--s-4) var(--s-5);
-  box-shadow: var(--shadow-sm);
+  background: rgba(255,255,255,.58);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border-radius: 20px;
+  padding: var(--s-5) var(--s-6);
+  box-shadow:
+    0 8px 32px rgba(13,43,69,.10),
+    0 2px 6px rgba(0,0,0,.05),
+    inset 0 1px 0 rgba(255,255,255,.85);
+  border: 1px solid rgba(255,255,255,.62);
 }
+
 
 .card-head {
   display: flex;
@@ -85,71 +92,139 @@ a { text-decoration: none; color: inherit; }
   justify-content: space-between;
   margin-bottom: var(--s-3);
 }
-.card-title { font-size: 14px; font-weight: 700; }
-.card-sub { font-size: 11px; color: var(--muted); margin-top: 1px; }
+.card-title { font-size: 13.5px; font-weight: 700; letter-spacing: -.2px; }
+.card-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
 
 .tag {
   font-size: 10px;
-  font-weight: 700;
+  font-weight: 600;
   padding: 3px 9px;
-  border-radius: 20px;
+  border-radius: 4px;
   white-space: nowrap;
+  letter-spacing: .2px;
 }
 .tag-good   { background: var(--good-bg);   color: var(--good); }
 .tag-warn   { background: var(--warn-bg);   color: var(--warn); }
 .tag-danger { background: var(--danger-bg); color: var(--danger); }
-.tag-info   { background: #E8F1FA;          color: var(--info); }
+.tag-info   { background: #E3F2FD;          color: var(--info); }
 
 /* Grid helpers */
 .grid { display: grid; gap: var(--s-4); }
+/* Allow grid items to shrink below content width so inner
+   overflow-x wrappers (tables, workload cards) contain themselves
+   instead of blowing the track out and scrolling the whole page. */
+.grid > * { min-width: 0; }
 
-/* Status badge (tables) */
+/* Status badge (tables) — soft rounded pill */
 .badge {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   font-size: 11px;
-  font-weight: 700;
-  padding: 3px 10px;
-  border-radius: 6px;
+  font-weight: 600;
+  padding: 5px 11px;
+  border-radius: 20px;
+  letter-spacing: .1px;
+  white-space: nowrap;
 }
-.badge::before { content:''; width:6px; height:6px; border-radius:50%; background: currentColor; }
+.badge::before { content:''; width:6px; height:6px; border-radius:50%; background: currentColor; flex-shrink: 0; }
 .badge-good   { background: var(--good-bg);   color: var(--good); }
 .badge-warn   { background: var(--warn-bg);   color: var(--warn); }
 .badge-danger { background: var(--danger-bg); color: var(--danger); }
+.badge-info   { background: #E3F2FD;          color: var(--info); }
 
-/* Data table */
+/* Data table — airy, borderless (LoopAI-style) */
 .table-wrap { overflow-x: auto; }
 table.data {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
 }
 table.data thead th {
-  font-size: 10px;
+  font-size: 9.5px;
   text-transform: uppercase;
   letter-spacing: .6px;
   color: var(--muted);
   font-weight: 700;
   text-align: left;
-  padding: 10px 12px;
-  background: #F7F9FC;
+  padding: 8px 16px 12px;
   border-bottom: 1px solid var(--line);
   white-space: nowrap;
 }
-table.data thead th:first-child { border-top-left-radius: var(--r-sm); }
-table.data thead th:last-child  { border-top-right-radius: var(--r-sm); }
 table.data tbody td {
-  font-size: 12.5px;
-  padding: 11px 12px;
-  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+  padding: 15px 16px;
+  border-bottom: 1px solid rgba(13,43,69,.05);
   color: var(--ink);
+  vertical-align: middle;
 }
-table.data tbody tr:hover { background: #FAFCFE; }
+table.data tbody td:first-child { font-weight: 600; }
+/* Rounded "card row" hover that floats above the dividers */
+table.data tbody tr { transition: background .12s; }
+table.data tbody tr:hover td { background: rgba(108,92,231,.05); }
+table.data tbody tr:hover td:first-child { box-shadow: inset 3px 0 0 var(--primary-400); }
 table.data tbody tr:last-child td { border-bottom: 0; }
-.t-num { font-variant-numeric: tabular-nums; }
+.t-num { font-variant-numeric: tabular-nums; text-align: right; }
+
+/* Two-line cell (name + @handle / title + subtitle) */
+.cell-main { font-weight: 600; font-size: 13px; line-height: 1.25; white-space: nowrap; }
+.cell-sub  { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+/* Three-dot "More" action */
+.more-btn {
+  width: 28px; height: 28px; border-radius: 8px;
+  border: none; background: transparent; cursor: pointer;
+  color: var(--muted); display: inline-flex; align-items: center; justify-content: center;
+  transition: background .12s, color .12s;
+}
+.more-btn:hover { background: rgba(13,43,69,.06); color: var(--ink); }
+
+/* Tab pills with count badges */
+.tabpills { display: flex; gap: 4px; flex-wrap: wrap; }
+.tabpill {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 12.5px; font-weight: 500; color: var(--muted);
+  padding: 7px 14px; border-radius: 20px; cursor: pointer;
+  border: 1px solid transparent; transition: background .12s, color .12s, border-color .12s;
+}
+.tabpill:hover { color: var(--ink); }
+.tabpill.active { background: var(--surface); color: var(--ink); font-weight: 600; border-color: var(--line); box-shadow: var(--shadow-sm); }
+.tabpill .count {
+  font-size: 10.5px; font-weight: 700; min-width: 18px; height: 18px; padding: 0 5px;
+  border-radius: 9px; background: rgba(13,43,69,.08); color: var(--muted);
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.tabpill.active .count { background: var(--primary-400); color: #fff; }
 .t-danger { color: var(--danger); font-weight: 700; }
 .t-good   { color: var(--good); font-weight: 700; }
-.t-muted  { color: var(--muted); }
+.t-muted  { color: var(--muted); font-size: 12px; }
 
-.page-title { font-size: 20px; font-weight: 800; letter-spacing: -.4px; }
-.page-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.page-title { font-size: 20px; font-weight: 800; letter-spacing: -.5px; }
+.page-sub { font-size: 12px; color: var(--muted); margin-top: 3px; }
+
+/* Responsive dashboard grid helpers */
+.dash-grid-a { grid-template-columns: 1fr 1.6fr; }
+.dash-grid-b { grid-template-columns: 1fr 1fr; }
+
+@media (max-width: 1024px) {
+  .dash-grid-a { grid-template-columns: 1fr 1.2fr; }
+  .dash-grid-b { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 860px) {
+  .dash-grid-a,
+  .dash-grid-b { grid-template-columns: 1fr; }
+}
+
+/* Workload cards scroll on narrow screens */
+.workload-cards { display: flex; gap: 8px; margin-bottom: 10px; overflow-x: auto; }
+.workload-cards::-webkit-scrollbar { height: 3px; }
+.workload-cards::-webkit-scrollbar-thumb { background: rgba(0,0,0,.15); border-radius: 3px; }
+
+@media (max-width: 600px) {
+  .app-content { padding: var(--s-3) var(--s-3) var(--s-4); }
+  .card { border-radius: 14px; padding: var(--s-4) var(--s-4); }
+  .page-title { font-size: 16px; }
+  table.data thead th { padding: 8px 10px; }
+  table.data tbody td { padding: 9px 10px; }
+}

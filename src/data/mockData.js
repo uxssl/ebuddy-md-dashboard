@@ -56,8 +56,86 @@ export const trend = [
 
 /* Task status split for donut */
 export const taskSplit = [
-  { name: 'Done',        value: 5372, color: 'var(--good)' },
-  { name: 'To-Do',       value: 19,   color: 'var(--warn)' },
-  { name: 'Overdue',     value: 12,   color: 'var(--danger)' },
-  { name: 'In Progress', value: 1,    color: 'var(--info)' },
+  { name: 'Done',        value: 5372, color: '#2E7D32' },
+  { name: 'To-Do',       value: 19,   color: '#EF6C00' },
+  { name: 'Overdue',     value: 12,   color: '#C62828' },
+  { name: 'In Progress', value: 1,    color: '#0277BD' },
+]
+
+/* ── Dashboard v2 data ───────────────────────────────────────── */
+
+/* Project Status Overview — donut */
+export const projectStatus = [
+  { name: 'Completed',   value: 6, pct: 35, color: '#2E7D32' },
+  { name: 'In Progress', value: 7, pct: 41, color: '#1E88E5' },
+  { name: 'On Hold',     value: 2, pct: 12, color: '#EF6C00' },
+  { name: 'Overdue',     value: 2, pct: 12, color: '#C62828' },
+  { name: 'Cancelled',   value: 0, pct: 0,  color: '#9E9E9E' },
+]
+export const totalProjects = 17
+
+/* Workload Distribution — dept cards */
+export const workloadDist = [
+  { dept: 'Engineering',       pct: 42, tasks: 126, bg: '#00ACC1' },
+  { dept: 'QA',                pct: 18, tasks: 54,  bg: '#388E3C' },
+  { dept: 'DevOps',            pct: 12, tasks: 36,  bg: '#546E7A' },
+  { dept: 'Sales & Marketing', pct: 10, tasks: 30,  bg: '#E64A19' },
+  { dept: 'HR',                pct: 10, tasks: 30,  bg: '#AD1457' },
+  { dept: 'Finance',           pct: 8,  tasks: 24,  bg: '#512DA8' },
+]
+
+/* Department Task Overview — table */
+export const deptTaskOverview = [
+  { dept: 'Admin',           projects: 4, total: 0, todo: 0, inProg: 0, done: 0, overdue: 0, stuck: 0, completion: 0 },
+  { dept: 'Human Resources', projects: 2, total: 0, todo: 0, inProg: 0, done: 0, overdue: 0, stuck: 0, completion: 0 },
+]
+
+/* Projects by Overdue Tasks — table */
+export const projectsOverdue = [
+  { name: 'HERCULES 2.0', total: 2, overdue: 2, timeTaken: '12d', risk: 'High', costBurned: 2176, completion: 0 },
+  { name: 'PCI-DSS',      total: 1, overdue: 1, timeTaken: '7d',  risk: 'High', costBurned: 1000, completion: 0 },
+]
+
+/* Top Employees by Overdue Tasks — table */
+export const topEmployeesOverdue = [
+  { name: 'Khan Yeasir Arafat', initials: 'KY', avatarBg: '#00ACC1', dept: 'Service Assurance-Quality Assurance', total: 2, done: 0, overdue: 2, completion: 0 },
+  { name: 'Mozbaul Alam',       initials: 'MA', avatarBg: '#757575', dept: 'Engineering',                          total: 1, done: 0, overdue: 1, completion: 0 },
+]
+
+/* Team Productivity Trend — line chart */
+export const productivityTrend = [
+  { month: 'Jan', completion: 60 },
+  { month: 'Feb', completion: 55 },
+  { month: 'Mar', completion: 65 },
+  { month: 'Apr', completion: 70 },
+  { month: 'May', completion: 65 },
+  { month: 'Jun', completion: 78 },
+]
+
+/* Revenue Analytics — project-wise dot-matrix (LoopAI-style).
+   value = revenue earned per project ($).
+   NOTE: revenue figures are placeholders — wire to real API per project. */
+export const revenueMatrix = {
+  prefix: '৳',
+  max: 4800,
+  items: [
+    { name: 'HERCULES 2.0',   value: 4200, highlight: true },
+    { name: 'ELCOMMERZ',      value: 3600 },
+    { name: 'Monthly Dev',    value: 3000 },
+    { name: 'PCI-DSS',        value: 2400 },
+    { name: 'JTS Call Center',value: 1800 },
+    { name: 'Vendor',         value: 1200 },
+    { name: 'Modish Proj 2',  value: 800 },
+  ],
+}
+
+/* Revenue vs Cost Burned — 6-month trend ($K).
+   NOTE: placeholder figures — wire to real finance API. */
+export const revenueVsCost = [
+  { month: 'Jan', revenue: 30, cost: 20 },
+  { month: 'Feb', revenue: 38, cost: 28 },
+  { month: 'Mar', revenue: 52, cost: 41 },
+  { month: 'Apr', revenue: 60, cost: 55 },
+  { month: 'May', revenue: 82, cost: 60 },
+  { month: 'Jun', revenue: 96, cost: 68 },
 ]

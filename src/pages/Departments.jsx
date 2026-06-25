@@ -40,9 +40,12 @@ export default function Departments() {
           <table className="data">
             <thead>
               <tr>
-                <th>Department</th><th>Head</th><th>Projects</th><th>Total</th>
-                <th>To-Do</th><th>In Prog</th><th>Done</th><th>Overdue</th>
-                <th>Stuck</th><th>Completion</th><th>Flag</th>
+                <th>Department</th><th>Head</th>
+                <th className="t-num">Projects</th><th className="t-num">Total</th>
+                <th className="t-num">To-Do</th><th className="t-num">In Prog</th>
+                <th className="t-num">Done</th><th className="t-num">Overdue</th>
+                <th className="t-num">Stuck</th><th className="t-num">Completion</th>
+                <th>Flag</th>
               </tr>
             </thead>
             <tbody>
@@ -61,7 +64,7 @@ export default function Departments() {
                   <td><StatusBadge value={d.flag} /></td>
                 </tr>
               ))}
-              <tr style={{ fontWeight:700, background:'#F7F9FC' }}>
+              <tr style={{ fontWeight:700, background:'#FAFAFA' }}>
                 <td>TOTAL ({departments.length})</td><td></td>
                 <td className="t-num">{totals.projects}</td>
                 <td className="t-num">{totals.total.toLocaleString()}</td>

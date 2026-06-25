@@ -16,9 +16,12 @@ export default function Employees() {
           <table className="data">
             <thead>
               <tr>
-                <th>Employee</th><th>Department</th><th>Projects</th><th>Assigned</th>
-                <th>To-Do</th><th>In Prog</th><th>Done</th><th>Overdue</th>
-                <th>Stuck</th><th>Completion</th><th>Status</th>
+                <th>Employee</th><th>Department</th>
+                <th className="t-num">Projects</th><th className="t-num">Assigned</th>
+                <th className="t-num">To-Do</th><th className="t-num">In Prog</th>
+                <th className="t-num">Done</th><th className="t-num">Overdue</th>
+                <th className="t-num">Stuck</th><th className="t-num">Completion</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>

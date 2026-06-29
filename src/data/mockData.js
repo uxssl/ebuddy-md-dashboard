@@ -161,3 +161,87 @@ export const revenueVsCost = [
   { month: 'May', revenue: 82, cost: 60 },
   { month: 'Jun', revenue: 96, cost: 68 },
 ]
+
+/* ── Dashboard v3 — Revenue-focused MD view ─────────────────── */
+
+/* KPI Stat Cards */
+export const kpiStats = [
+  { label: 'Total Revenue',     value: '৳24.58M', change: 18.6, vs: 'vs May 2026', up: true,  color: '#00ACC1', iconType: 'revenue', spark: [18.2, 19.5, 18.8, 21.3, 22.1, 20.5, 23.4, 24.58] },
+  { label: 'Gross Profit',      value: '৳11.32M', change: 15.3, vs: 'vs May 2026', up: true,  color: '#2E7D32', iconType: 'profit',  spark: [8.5, 9.2, 8.8, 10.1, 9.8, 10.5, 10.8, 11.32]     },
+  { label: 'Operating Margin',  value: '25.1%',   change: 2.4,  vs: 'vs May 2026', up: true,  color: '#EF6C00', iconType: 'margin',  spark: [22.1, 22.8, 22.5, 23.4, 23.1, 24.2, 24.6, 25.1]  },
+  { label: 'Cash Balance',      value: '৳18.74M', change: 9.8,  vs: 'vs May 2026', up: true,  color: '#1565C0', iconType: 'cash',    spark: [15.2, 15.8, 16.3, 16.1, 17.2, 17.5, 18.1, 18.74]  },
+  { label: 'Active Clients',    value: '1,248',   change: 7.2,  vs: 'vs May 2026', up: true,  color: '#9C27B0', iconType: 'clients', spark: [1090, 1120, 1105, 1150, 1165, 1190, 1220, 1248]    },
+]
+
+/* Revenue Analytics — by business unit (values in ৳M) */
+export const revenueByUnit = {
+  max: 10,
+  items: [
+    { name: 'HERCULES 2.0',   value: 9.42 },
+    { name: 'ELCOMMERZ',      value: 6.18 },
+    { name: 'PCI-DSS',        value: 4.35 },
+    { name: 'JTS Call Center',value: 2.78 },
+    { name: 'Modish Proj 2',  value: 1.85 },
+  ],
+}
+
+/* Revenue vs Cost Burned — 6-month (৳M) */
+export const revenueCostTrend = [
+  { month: 'Jan', revenue: 16.5, cost: 10.2 },
+  { month: 'Feb', revenue: 18.2, cost: 11.4 },
+  { month: 'Mar', revenue: 17.8, cost: 11.1 },
+  { month: 'Apr', revenue: 20.3, cost: 12.8 },
+  { month: 'May', revenue: 19.6, cost: 12.2 },
+  { month: 'Jun', revenue: 24.58,cost: 15.1 },
+]
+
+/* Department Wise Revenue — donut data (৳M) */
+export const deptRevenueDist = [
+  { name: 'Engineering',      value: 9.42, pct: 38.3, color: '#1E88E5' },
+  { name: 'QA',               value: 6.18, pct: 25.1, color: '#2E7D32' },
+  { name: 'Customer Support', value: 4.35, pct: 17.7, color: '#EF6C00' },
+  { name: 'DevOps',           value: 2.78, pct: 11.3, color: '#9C27B0' },
+  { name: 'Others',           value: 1.85, pct: 7.6,  color: '#EF5350' },
+]
+
+/* Project Wise Report — table (৳M) */
+export const projectWiseReport = [
+  { project: 'HERCULES 2.0',    revenue: 9.42, revenuePct: 38.3, target: 10.5, achievement: 89 },
+  { project: 'ELCOMMERZ',       revenue: 6.18, revenuePct: 25.1, target: 6.8,  achievement: 91 },
+  { project: 'PCI-DSS',         revenue: 4.35, revenuePct: 17.7, target: 4.6,  achievement: 95 },
+  { project: 'JTS Call Center', revenue: 2.78, revenuePct: 11.3, target: 3.0,  achievement: 93 },
+  { project: 'Modish Proj 2',   revenue: 1.85, revenuePct: 7.6,  target: 2.2,  achievement: 84 },
+]
+
+/* Top Revenue Drivers — ranked list */
+export const topRevenueDrivers = [
+  { rank: 1, name: 'HERCULES 2.0',    pct: 38.3, color: '#1E88E5' },
+  { rank: 2, name: 'ELCOMMERZ',       pct: 25.1, color: '#2E7D32' },
+  { rank: 3, name: 'PCI-DSS',         pct: 17.7, color: '#EF6C00' },
+  { rank: 4, name: 'JTS Call Center', pct: 11.3, color: '#9C27B0' },
+  { rank: 5, name: 'Others',          pct: 7.6,  color: '#EF5350' },
+]
+
+/* Business Health Score */
+export const businessHealth = {
+  score: 82,
+  label: 'Healthy',
+  changePts: 6,
+  metrics: [
+    { name: 'Revenue Growth',        score: 85 },
+    { name: 'Profitability',         score: 80 },
+    { name: 'Cash Position',         score: 78 },
+    { name: 'Operational Efficiency',score: 84 },
+    { name: 'Client Satisfaction',   score: 83 },
+  ],
+}
+
+/* Financial Performance Trend — 6-month multi-line (৳M / %) */
+export const financialPerfTrend = [
+  { month: 'Jan', revenue: 16.5, grossProfit: 7.8,  operatingMargin: 21.5 },
+  { month: 'Feb', revenue: 18.2, grossProfit: 8.5,  operatingMargin: 22.0 },
+  { month: 'Mar', revenue: 17.8, grossProfit: 8.2,  operatingMargin: 21.8 },
+  { month: 'Apr', revenue: 20.3, grossProfit: 9.6,  operatingMargin: 23.0 },
+  { month: 'May', revenue: 19.6, grossProfit: 9.2,  operatingMargin: 22.5 },
+  { month: 'Jun', revenue: 24.58,grossProfit: 11.32, operatingMargin: 25.1 },
+]

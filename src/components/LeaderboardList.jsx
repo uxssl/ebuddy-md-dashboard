@@ -7,7 +7,7 @@ function RevenueRow({ rank, label, value, max }) {
   const barPct = max > 0 ? (value / max) * 100 : 0
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '7px 0', borderBottom: '1px solid rgba(13,43,69,.05)' }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '7px 0', borderBottom: 'none' }}>
       <div style={{
         width: 22, height: 22, borderRadius: 6, flexShrink: 0,
         background: isTop3 ? MEDAL_BG[idx] : '#F4F4F5',
@@ -21,7 +21,7 @@ function RevenueRow({ rank, label, value, max }) {
           {label}
         </div>
         <div style={{ height: 3, background: '#E4E4E7', borderRadius: 2, overflow: 'hidden' }}>
-          <div style={{ width: `${barPct}%`, height: '100%', borderRadius: 2, background: 'var(--primary-400)' }} />
+          <div style={{ width: `${barPct}%`, height: '100%', borderRadius: 2, background: '#CBD5E1' }} />
         </div>
       </div>
 
@@ -36,7 +36,7 @@ function AchievementRow({ rank, label, pct }) {
   const isTop3 = rank <= 3
   const idx = rank - 1
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '7px 0', borderBottom: '1px solid rgba(13,43,69,.05)' }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '7px 0', borderBottom: 'none' }}>
       <div style={{
         width: 22, height: 22, borderRadius: 6, flexShrink: 0,
         background: isTop3 ? MEDAL_BG[idx] : '#F4F4F5',
@@ -50,7 +50,7 @@ function AchievementRow({ rank, label, pct }) {
           {label}
         </div>
         <div style={{ height: 3, background: '#E4E4E7', borderRadius: 2, overflow: 'hidden' }}>
-          <div style={{ width: `${Math.min(pct, 100)}%`, height: '100%', borderRadius: 2, background: 'var(--good)' }} />
+          <div style={{ width: `${Math.min(pct, 100)}%`, height: '100%', borderRadius: 2, background: '#CBD5E1' }} />
         </div>
       </div>
 

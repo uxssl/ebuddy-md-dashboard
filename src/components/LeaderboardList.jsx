@@ -1,75 +1,50 @@
-const MEDAL = ['#F59E0B', '#94A3B8', '#CD7F32']
-const MEDAL_BG = ['#FFFBEB', '#F8FAFC', '#FDF6EE']
+const RANK_COLORS = ['#6366F1', '#818CF8', '#A5B4FC']
 
-function RevenueRow({ rank, label, value, max }) {
+function Row({ rank, label, valueLine }) {
   const isTop3 = rank <= 3
-  const idx = rank - 1
-  const barPct = max > 0 ? (value / max) * 100 : 0
+  const rankColor = isTop3 ? RANK_COLORS[rank - 1] : 'var(--muted)'
+  const isFirst = rank === 1
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-      <div style={{
-        width: 22, height: 22, borderRadius: 6, flexShrink: 0,
-        background: isTop3 ? MEDAL_BG[idx] : '#F4F4F5',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        fontSize: 10, fontWeight: 800,
-        color: isTop3 ? MEDAL[idx] : '#A1A1AA',
-      }}>{rank}</div>
-
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontSize: 12, fontWeight: 500, color: 'var(--ink)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', marginBottom: 3 }}>
-          {label}
-        </div>
-        <div style={{ height: 3, background: '#F0F0F0', borderRadius: 2, overflow: 'hidden' }}>
-          <div style={{ width: `${barPct}%`, height: '100%', borderRadius: 2, background: '#94A3B8' }} />
-        </div>
-      </div>
-
-      <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--ink)', whiteSpace: 'nowrap', fontVariantNumeric: 'tabular-nums' }}>
-        ৳{value.toFixed(2)}M
-      </div>
-    </div>
-  )
-}
-
-function AchievementRow({ rank, label, pct }) {
-  const isTop3 = rank <= 3
-  const idx = rank - 1
-  return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-      <div style={{
-        width: 22, height: 22, borderRadius: 6, flexShrink: 0,
-        background: isTop3 ? MEDAL_BG[idx] : '#F4F4F5',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        fontSize: 10, fontWeight: 800,
-        color: isTop3 ? MEDAL[idx] : '#A1A1AA',
-      }}>{rank}</div>
-
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontSize: 12, fontWeight: 500, color: 'var(--ink)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', marginBottom: 3 }}>
-          {label}
-        </div>
-        <div style={{ height: 3, background: '#F0F0F0', borderRadius: 2, overflow: 'hidden' }}>
-          <div style={{ width: `${Math.min(pct, 100)}%`, height: '100%', borderRadius: 2, background: '#94A3B8' }} />
-        </div>
-      </div>
-
-      <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--ink)', whiteSpace: 'nowrap' }}>
-        {pct}%
-      </div>
+    <div style={{
+      display: 'flex', alignItems: 'center', gap: 10,
+      padding: '7px 9px', borderRadius: 9,
+      background: isFirst ? '#EEF2FF' : 'transparent',
+    }}>
+      <span style={{
+        fontSize: 11, fontWeight: 800, color: rankColor,
+        width: 16, flexShrink: 0, fontVariantNumeric: 'tabular-nums',
+      }}>
+        {rank}
+      </span>
+      <span style={{
+        flex: 1, fontSize: 12.5,
+        fontWeight: isFirst ? 600 : 500,
+        color: 'var(--ink)',
+        whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+      }}>
+        {label}
+      </span>
+      <span style={{
+        fontSize: 12.5, fontWeight: 700, flexShrink: 0,
+        color: isFirst ? '#6366F1' : 'var(--ink)',
+        fontVariantNumeric: 'tabular-nums',
+      }}>
+        {valueLine}
+      </span>
     </div>
   )
 }
 
 export default function LeaderboardList({ rows, variant = 'revenue' }) {
-  const max = variant === 'revenue' ? Math.max(...rows.map(r => r.value ?? 0)) : 100
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
       {rows.map((row, i) => {
-        if (variant === 'achievement') {
-          return <AchievementRow key={row.name} rank={i + 1} label={row.name} pct={row.pct} />
-        }
-        return <RevenueRow key={row.name} rank={i + 1} label={row.name} value={row.value} max={max} />
+        const rank = i + 1
+        const valueLine = variant === 'achievement'
+          ? `${row.pct}%`
+          : `৳${row.value.toFixed(2)}M`
+        return <Row key={row.name} rank={rank} label={row.name} valueLine={valueLine} />
       })}
     </div>
   )

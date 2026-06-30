@@ -448,6 +448,14 @@ table.data thead th.t-num { text-align: right; }
 @media (max-width: 1024px) {
   .dash-grid-a { grid-template-columns: 1fr 1.2fr; }
   .dash-grid-b { grid-template-columns: 1fr 1fr; }
+  /* perf row: drop min-width lock, go 2+1 stacked */
+  .dash-grid-perf {
+    grid-template-columns: 1fr 1fr;
+    min-width: 0;
+  }
+  .dash-grid-perf > *:last-child {
+    grid-column: span 2;
+  }
 }
 
 @media (max-width: 860px) {
@@ -456,13 +464,19 @@ table.data thead th.t-num { text-align: right; }
   .dash-grid-c,
   .dash-grid-dept-cost { grid-template-columns: 1fr; }
   .dash-grid-5 { grid-template-columns: repeat(2, 1fr); }
-  .dash-grid-4 { grid-template-columns: 1fr; }
+  .dash-grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .dash-grid-perf {
+    grid-template-columns: 1fr;
+    min-width: 0;
+  }
+  .dash-grid-perf > *:last-child { grid-column: span 1; }
   .dash-span-4,
   .dash-span-8 { grid-column: span 12; }
 }
 
 @media (max-width: 520px) {
   .dash-grid-5 { grid-template-columns: 1fr; }
+  .dash-grid-4 { grid-template-columns: 1fr; }
 }
 
 /* Workload cards scroll on narrow screens */

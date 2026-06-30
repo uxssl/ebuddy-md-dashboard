@@ -1,12 +1,17 @@
 import PageHeader from '../components/PageHeader.jsx'
 import FilterBar from './FilterBar.jsx'
 
-/* Page title, then filters, then page body — same order on every page. */
 export default function PageFrame({ title, sub, actions, children }) {
+  const right = (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+      <FilterBar />
+      {actions}
+    </div>
+  )
+
   return (
     <>
-      <PageHeader title={title} sub={sub} actions={actions} />
-      <FilterBar />
+      <PageHeader title={title} sub={sub} actions={right} />
       {children}
     </>
   )

@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import Layout from './layout/Layout.jsx'
 import Dashboard from './pages/Dashboard.jsx'
+import DashboardV2 from './pages/DashboardV2.jsx'
 import Departments from './pages/Departments.jsx'
 import Employees from './pages/Employees.jsx'
 import Projects from './pages/Projects.jsx'
@@ -13,6 +14,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard-v2" element={<DashboardV2 />} />
         <Route path="/departments" element={<Departments />} />
         <Route path="/employees" element={<Employees />} />
         <Route path="/projects" element={<Projects />} />

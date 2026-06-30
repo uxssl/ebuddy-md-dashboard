@@ -1,25 +1,21 @@
 import LeaderboardList from './LeaderboardList.jsx'
 
-/* Ranked list card — Top Sales Team, Business Unit, KAM, Achievement */
-export default function LeaderboardCard({
-  title,
-  rows,
-  variant = 'revenue',
-  onViewAll,
-}) {
+export default function LeaderboardCard({ title, rows, variant = 'revenue', onViewAll }) {
   return (
-    <div className="card dash-leaderboard-card">
-      <div className="card-head dash-lb-head">
-        <div className="card-title">{title}</div>
+    <div className="card" style={{ display: 'flex', flexDirection: 'column', padding: '14px 16px 12px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+        <span style={{ fontSize: 12.5, fontWeight: 700, color: 'var(--ink)' }}>{title}</span>
         <button
           type="button"
-          className="dash-lb-view-all"
           onClick={onViewAll}
-        >
-          View All
-        </button>
+          style={{
+            border: 'none', background: 'none', padding: 0,
+            fontFamily: 'var(--font)', fontSize: 10.5, fontWeight: 500,
+            color: 'var(--primary-400)', cursor: 'pointer',
+            whiteSpace: 'nowrap',
+          }}
+        >View All →</button>
       </div>
-
       <LeaderboardList rows={rows} variant={variant} />
     </div>
   )

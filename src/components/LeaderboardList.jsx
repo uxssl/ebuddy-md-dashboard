@@ -7,7 +7,7 @@ function RevenueRow({ rank, label, value, max }) {
   const barPct = max > 0 ? (value / max) * 100 : 0
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '7px 0', borderBottom: 'none' }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
       <div style={{
         width: 22, height: 22, borderRadius: 6, flexShrink: 0,
         background: isTop3 ? MEDAL_BG[idx] : '#F4F4F5',
@@ -20,8 +20,8 @@ function RevenueRow({ rank, label, value, max }) {
         <div style={{ fontSize: 12, fontWeight: 500, color: 'var(--ink)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', marginBottom: 3 }}>
           {label}
         </div>
-        <div style={{ height: 3, background: '#E4E4E7', borderRadius: 2, overflow: 'hidden' }}>
-          <div style={{ width: `${barPct}%`, height: '100%', borderRadius: 2, background: '#CBD5E1' }} />
+        <div style={{ height: 3, background: '#F0F0F0', borderRadius: 2, overflow: 'hidden' }}>
+          <div style={{ width: `${barPct}%`, height: '100%', borderRadius: 2, background: '#94A3B8' }} />
         </div>
       </div>
 
@@ -36,7 +36,7 @@ function AchievementRow({ rank, label, pct }) {
   const isTop3 = rank <= 3
   const idx = rank - 1
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '7px 0', borderBottom: 'none' }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
       <div style={{
         width: 22, height: 22, borderRadius: 6, flexShrink: 0,
         background: isTop3 ? MEDAL_BG[idx] : '#F4F4F5',
@@ -49,8 +49,8 @@ function AchievementRow({ rank, label, pct }) {
         <div style={{ fontSize: 12, fontWeight: 500, color: 'var(--ink)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', marginBottom: 3 }}>
           {label}
         </div>
-        <div style={{ height: 3, background: '#E4E4E7', borderRadius: 2, overflow: 'hidden' }}>
-          <div style={{ width: `${Math.min(pct, 100)}%`, height: '100%', borderRadius: 2, background: '#CBD5E1' }} />
+        <div style={{ height: 3, background: '#F0F0F0', borderRadius: 2, overflow: 'hidden' }}>
+          <div style={{ width: `${Math.min(pct, 100)}%`, height: '100%', borderRadius: 2, background: '#94A3B8' }} />
         </div>
       </div>
 
@@ -64,7 +64,7 @@ function AchievementRow({ rank, label, pct }) {
 export default function LeaderboardList({ rows, variant = 'revenue' }) {
   const max = variant === 'revenue' ? Math.max(...rows.map(r => r.value ?? 0)) : 100
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
       {rows.map((row, i) => {
         if (variant === 'achievement') {
           return <AchievementRow key={row.name} rank={i + 1} label={row.name} pct={row.pct} />

@@ -1,9 +1,10 @@
-import PageHeader from '../components/PageHeader.jsx'
+import PageFrame from '../layout/PageFrame.jsx'
 import ChartCard from '../components/ChartCard.jsx'
 import StatusBadge from '../components/StatusBadge.jsx'
-import { projects } from '../data/mockData.js'
+import { useFilters } from '../context/FilterContext.jsx'
 
 export default function Projects() {
+  const { projects } = useFilters()
   const createBtn = (
     <button style={{ background:'var(--primary)', color:'#fff', border:'none',
       borderRadius:'var(--r-sm)', padding:'9px 16px', fontSize:12, fontWeight:600, cursor:'pointer' }}>
@@ -12,9 +13,11 @@ export default function Projects() {
   )
 
   return (
-    <>
-      <PageHeader title="Project List" sub="Project Management › Project Details › Project List" actions={createBtn} />
-
+    <PageFrame
+      title="Project List"
+      sub="Project Management › Project Details › Project List"
+      actions={createBtn}
+    >
       <ChartCard title="Projects" sub={`${projects.length} active projects`}>
         <div className="table-wrap">
           <table className="data">
@@ -47,6 +50,6 @@ export default function Projects() {
           </table>
         </div>
       </ChartCard>
-    </>
+    </PageFrame>
   )
 }

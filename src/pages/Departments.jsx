@@ -1,26 +1,25 @@
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Cell } from 'recharts'
-import PageHeader from '../components/PageHeader.jsx'
+import PageFrame from '../layout/PageFrame.jsx'
 import ChartCard from '../components/ChartCard.jsx'
 import StatusBadge from '../components/StatusBadge.jsx'
 import { C } from '../theme.js'
-import { departments } from '../data/mockData.js'
-
-const totals = departments.reduce((a, d) => ({
-  projects: a.projects + d.projects, total: a.total + d.total,
-  todo: a.todo + d.todo, wip: a.wip + d.wip, done: a.done + d.done,
-  overdue: a.overdue + d.overdue, stuck: a.stuck + d.stuck,
-}), { projects:0, total:0, todo:0, wip:0, done:0, overdue:0, stuck:0 })
-
-const chart = departments.map(d => ({
-  name: d.name.length > 14 ? d.name.slice(0,12)+'…' : d.name,
-  completion: d.completion, flag: d.flag,
-}))
+import { useFilters } from '../context/FilterContext.jsx'
 
 export default function Departments() {
-  return (
-    <>
-      <PageHeader title="Departments" sub="Department task performance · completion · overdue · stuck" />
+  const { departments } = useFilters()
 
+  const totals = departments.reduce((a, d) => ({
+    projects: a.projects + d.projects, total: a.total + d.total,
+    todo: a.todo + d.todo, wip: a.wip + d.wip, done: a.done + d.done,
+    overdue: a.overdue + d.overdue, stuck: a.stuck + d.stuck,
+  }), { projects:0, total:0, todo:0, wip:0, done:0, overdue:0, stuck:0 })
+
+  const chart = departments.map(d => ({
+    name: d.name.length > 14 ? d.name.slice(0,12)+'…' : d.name,
+    completion: d.completion, flag: d.flag,
+  }))
+  return (
+    <PageFrame title="Departments" sub="Department task performance · completion · overdue · stuck">
       <ChartCard title="Completion by Department" sub="Visual comparison across units" style={{ marginBottom:'var(--s-4)' }}>
         <ResponsiveContainer width="100%" height={220}>
           <BarChart data={chart} margin={{ top: 10 }}>
@@ -79,6 +78,6 @@ export default function Departments() {
           </table>
         </div>
       </ChartCard>
-    </>
+    </PageFrame>
   )
 }

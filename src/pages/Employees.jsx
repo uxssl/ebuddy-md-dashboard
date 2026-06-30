@@ -1,16 +1,15 @@
-import PageHeader from '../components/PageHeader.jsx'
+import PageFrame from '../layout/PageFrame.jsx'
 import ChartCard from '../components/ChartCard.jsx'
 import StatusBadge from '../components/StatusBadge.jsx'
 import { C } from '../theme.js'
-import { employees } from '../data/mockData.js'
+import { useFilters } from '../context/FilterContext.jsx'
 
 const initials = name => name.split(' ').filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase()
 
 export default function Employees() {
+  const { employees } = useFilters()
   return (
-    <>
-      <PageHeader title="Employees" sub="Employee task performance tracker · completion · overdue · stuck" />
-
+    <PageFrame title="Employees" sub="Employee task performance tracker · completion · overdue · stuck">
       <ChartCard title="Employee Task Performance Tracker" sub="Cost per employee · task completion · projects involved">
         <div className="table-wrap">
           <table className="data">
@@ -54,6 +53,6 @@ export default function Employees() {
           </table>
         </div>
       </ChartCard>
-    </>
+    </PageFrame>
   )
 }

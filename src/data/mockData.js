@@ -161,3 +161,113 @@ export const revenueVsCost = [
   { month: 'May', revenue: 82, cost: 60 },
   { month: 'Jun', revenue: 96, cost: 68 },
 ]
+
+/* ── Dashboard v4 — Sales & Pipeline view ───────────────────── */
+
+/* KPI Stat Cards */
+export const kpiStats = [
+  { label: 'Total Revenue',         value: '৳24.58M', change: 18.6, vs: 'vs May 2026', up: true, color: '#00ACC1', iconType: 'revenue',  spark: [18.2, 19.5, 18.8, 21.3, 22.1, 20.5, 23.4, 24.58] },
+  { label: 'Target Achievement',    value: '78%',     change: 8.4,  vs: 'vs May 2026', up: true, color: '#2E7D32', iconType: 'target',   spark: [68, 71, 70, 73, 72, 74, 76, 78]                    },
+  { label: 'Active Pipeline Value', value: '৳56.32M', change: 12.7, vs: 'vs May 2026', up: true, color: '#EF6C00', iconType: 'pipeline', spark: [44.2, 46.8, 48.5, 50.1, 51.8, 53.2, 54.9, 56.32]  },
+  { label: 'Active Clients',        value: '1,248',   change: 7.2,  vs: 'vs May 2026', up: true, color: '#9C27B0', iconType: 'clients',  spark: [1090, 1120, 1105, 1150, 1165, 1190, 1220, 1248]    },
+  { label: 'Active Projects',       value: '12',      change: 2,    vs: 'vs May 2026', up: true, color: '#1565C0', iconType: 'projects', spark: [8, 9, 9, 10, 10, 11, 11, 12], noPercent: true      },
+]
+
+/* Sales Performance */
+export const salesPerformance = {
+  target:        '৳31.50M',
+  achievement:   '৳24.58M',
+  revenue:       '৳24.58M',
+  achievementPct: 78,
+  lastMonthPct:   72,
+  changePct:       6,
+}
+
+/* Sales Pipeline — project pipeline by stage */
+export const salesPipeline = {
+  total: 56,
+  stages: [
+    { name: 'Prospecting',   value: 12, pct: 21, color: '#1E88E5' },
+    { name: 'Qualification', value: 15, pct: 27, color: '#2E7D32' },
+    { name: 'Proposal',      value: 10, pct: 18, color: '#EF6C00' },
+    { name: 'Negotiation',   value: 7,  pct: 13, color: '#9C27B0' },
+    { name: 'Closed Won',    value: 8,  pct: 14, color: '#00ACC1' },
+    { name: 'On Hold',       value: 4,  pct: 7,  color: '#EF5350' },
+  ],
+}
+
+/* Project Cost vs. Revenue — 6-month grouped bars (৳M) */
+export const revenueCostTrend = [
+  { month: 'Jan', revenue: 16.5, cost: 10.2 },
+  { month: 'Feb', revenue: 18.2, cost: 11.4 },
+  { month: 'Mar', revenue: 17.8, cost: 11.1 },
+  { month: 'Apr', revenue: 20.3, cost: 12.8 },
+  { month: 'May', revenue: 19.6, cost: 12.2 },
+  { month: 'Jun', revenue: 24.58,cost: 15.1 },
+]
+
+/* Department wise Project — donut + table */
+export const deptWiseProject = {
+  avgCompletion: 84,
+  depts: [
+    { name: 'Engineering',      todo: 128, completion: 77, color: '#1E88E5' },
+    { name: 'QA',               todo: 86,  completion: 74, color: '#2E7D32' },
+    { name: 'Customer Support', todo: 74,  completion: 70, color: '#EF6C00' },
+    { name: 'Sales',            todo: 69,  completion: 84, color: '#9C27B0' },
+    { name: 'Operations',       todo: 92,  completion: 68, color: '#00ACC1' },
+  ],
+}
+
+/* Product Performance — table (৳M) */
+export const projectWiseReport = [
+  { project: 'HERCULES 2.0',    revenue: 9.42, revenuePct: 38.3, target: 10.5, achievement: 89 },
+  { project: 'ELCOMMERZ',       revenue: 6.18, revenuePct: 25.1, target: 6.8,  achievement: 91 },
+  { project: 'PCI-DSS',         revenue: 4.35, revenuePct: 17.7, target: 4.6,  achievement: 95 },
+  { project: 'JTS Call Center', revenue: 2.78, revenuePct: 11.3, target: 3.0,  achievement: 93 },
+  { project: 'Modish Proj 2',   revenue: 1.85, revenuePct: 7.6,  target: 2.2,  achievement: 84 },
+]
+
+/* Top leaderboard cards — Executive Dashboard row 2 */
+export const topSalesTeams = [
+  { name: 'Enterprise Sales', value: 8.42 },
+  { name: 'SME Sales',        value: 6.21 },
+  { name: 'Corporate Sales',  value: 4.75 },
+  { name: 'Digital Sales',    value: 2.81 },
+  { name: 'Partner Sales',    value: 1.62 },
+]
+
+export const topBusinessUnits = [
+  { name: 'SSLCommerz',        value: 12.85 },
+  { name: 'SSL Wireless',      value: 7.65 },
+  { name: 'E-Ticketing',       value: 2.80 },
+  { name: 'PCI-DSS',           value: 1.28 },
+  { name: 'Hercules',          value: 0.94 },
+  { name: 'Monthly Dev',       value: 0.72 },
+  { name: 'Internal Products', value: 0.58 },
+]
+
+export const topKamSalesPersons = [
+  { name: 'Arafat Hossain',       value: 3.42 },
+  { name: 'Mehedi Hasan',         value: 2.85 },
+  { name: 'Nusrat Jahan',         value: 2.31 },
+  { name: 'Tanvir Ahmed',         value: 1.98 },
+  { name: 'Farhana Islam',        value: 1.62 },
+  { name: 'Ariful Islam',         value: 1.48 },
+  { name: 'Fardin Rahman',        value: 1.32 },
+  { name: 'Md. Bakhtiar Alam',    value: 1.18 },
+  { name: 'Kalyan Banik',         value: 1.05 },
+  { name: 'Mohammad Ashfaque Ali', value: 0.92 },
+]
+
+export const bestAchievementRatio = [
+  { name: 'Enterprise Sales', pct: 112 },
+  { name: 'Digital Sales',    pct: 98 },
+  { name: 'Corporate Sales',  pct: 92 },
+  { name: 'Partner Sales',    pct: 85 },
+  { name: 'SME Sales',        pct: 74 },
+  { name: 'SSLCommerz',       pct: 108 },
+  { name: 'SSL Wireless',     pct: 91 },
+  { name: 'E-Ticketing',      pct: 86 },
+  { name: 'PCI-DSS',          pct: 79 },
+  { name: 'Hercules',         pct: 71 },
+]

@@ -3,29 +3,29 @@
    ============================================================ */
 :root {
   /* Brand */
-  --primary:      #0D2B45;
-  --primary-700:  #071E32;
-  --primary-400:  #1565C0;
-  --accent:       #00ACC1;
+  --primary:      #0F172A;
+  --primary-700:  #020617;
+  --primary-400:  #4F46E5;
+  --accent:       #6366F1;
 
   /* Status */
-  --good:    #2E7D32;
-  --warn:    #EF6C00;
-  --danger:  #C62828;
-  --purple:  #6A1B9A;
-  --info:    #0277BD;
+  --good:    #10B981;
+  --warn:    #F59E0B;
+  --danger:  #EF4444;
+  --purple:  #8B5CF6;
+  --info:    #0EA5E9;
 
   /* Status soft backgrounds */
-  --good-bg:   #E8F5E9;
-  --warn-bg:   #FFF3E0;
-  --danger-bg: #FFEBEE;
+  --good-bg:   #ECFDF5;
+  --warn-bg:   #FFFBEB;
+  --danger-bg: #FEF2F2;
 
   /* Neutrals */
-  --ink:      #212121;
-  --muted:    #757575;
-  --line:     #E0E0E0;
+  --ink:      #18181B;
+  --muted:    #71717A;
+  --line:     #E4E4E7;
   --surface:  #FFFFFF;
-  --bg:       #ECEEF3;
+  --bg:       #F1F5F9;
 
   /* Radius */
   --r-sm: 8px;
@@ -56,8 +56,11 @@ html, body, #root { height: 100%; }
 body {
   font-family: var(--font);
   background: var(--bg);
-  background-image: radial-gradient(#C2C8D4 1px, transparent 1px);
-  background-size: 22px 22px;
+  background-image:
+    radial-gradient(ellipse at 10% 10%, rgba(99,102,241,.07) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 85%, rgba(16,185,129,.05) 0%, transparent 55%),
+    radial-gradient(#CBD5E1 1px, transparent 1px);
+  background-size: auto, auto, 22px 22px;
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
   font-size: 14px;
@@ -73,16 +76,23 @@ a { text-decoration: none; color: inherit; }
 /* ---------- Reusable utility classes ---------- */
 
 .card {
-  background: rgba(255,255,255,.58);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  background: rgba(255,255,255,.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
   border-radius: 16px;
   padding: 14px 18px;
   box-shadow:
-    0 8px 32px rgba(13,43,69,.10),
-    0 2px 6px rgba(0,0,0,.05),
-    inset 0 1px 0 rgba(255,255,255,.85);
-  border: 1px solid rgba(255,255,255,.62);
+    0 1px 0 rgba(255,255,255,.9) inset,
+    0 4px 24px rgba(15,23,42,.08),
+    0 1px 4px rgba(15,23,42,.04);
+  border: 1px solid rgba(255,255,255,.7);
+  transition: box-shadow .18s, transform .18s;
+}
+.card:hover {
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.9) inset,
+    0 8px 32px rgba(15,23,42,.11),
+    0 2px 8px rgba(15,23,42,.06);
 }
 
 
@@ -183,8 +193,8 @@ table.data tbody td {
 table.data tbody td:first-child { font-weight: 600; }
 /* Rounded "card row" hover that floats above the dividers */
 table.data tbody tr { transition: background .12s; }
-table.data tbody tr:hover td { background: rgba(108,92,231,.05); }
-table.data tbody tr:hover td:first-child { box-shadow: inset 3px 0 0 var(--primary-400); }
+table.data tbody tr:hover td { background: rgba(99,102,241,.04); }
+table.data tbody tr:hover td:first-child { box-shadow: inset 3px 0 0 var(--accent); }
 table.data tbody tr:last-child td { border-bottom: 0; }
 table.data thead th.t-num { text-align: right; }
 .t-num { font-variant-numeric: tabular-nums; text-align: right; }
@@ -222,8 +232,8 @@ table.data thead th.t-num { text-align: right; }
 .t-good   { color: var(--good); font-weight: 700; }
 .t-muted  { color: var(--muted); font-size: 12px; }
 
-.page-title { font-size: 20px; font-weight: 800; letter-spacing: -.5px; }
-.page-sub { font-size: 12px; color: var(--muted); margin-top: 3px; }
+.page-title { font-size: 21px; font-weight: 900; letter-spacing: -.6px; color: var(--ink); }
+.page-sub { font-size: 11.5px; color: var(--muted); margin-top: 3px; }
 
 /* Responsive dashboard grid helpers */
 .dash-grid-a { grid-template-columns: 1fr 1.6fr; }

@@ -34,39 +34,58 @@ import { useFilters } from "../context/FilterContext.jsx";
 function ProgressBar({ value, color = C.accent }) {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-      <div
-        style={{
-          flex: 1,
-          height: 6,
-          background: "#EAF0F6",
-          borderRadius: 4,
-          overflow: "hidden",
-          minWidth: 48,
-        }}
-      >
-        <div
-          style={{
-            width: `${value}%`,
-            height: "100%",
-            borderRadius: 4,
-            background: value === 100 ? C.good : color,
-          }}
-        />
+      <div style={{ flex: 1, height: 5, background: C.grid, borderRadius: 4, overflow: "hidden", minWidth: 48 }}>
+        <div style={{
+          width: `${value}%`, height: "100%", borderRadius: 4,
+          background: value === 100
+            ? `linear-gradient(90deg, ${C.good}, #34D399)`
+            : `linear-gradient(90deg, ${color}, ${color}CC)`,
+        }} />
       </div>
-      <span
-        style={{
-          fontSize: 11,
-          color: C.muted,
-          width: 32,
-          textAlign: "right",
-          flexShrink: 0,
-          fontVariantNumeric: "tabular-nums",
-        }}
-      >
+      <span style={{ fontSize: 11, color: C.muted, width: 32, textAlign: "right", flexShrink: 0, fontVariantNumeric: "tabular-nums" }}>
         {value}%
       </span>
     </div>
-  );
+  )
+}
+
+/* ── Section Label ─────────────────────────────────────────────── */
+function SectionLabel({ children }) {
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8, marginTop: 6 }}>
+      <span style={{ fontSize: 10.5, fontWeight: 700, color: C.muted, textTransform: "uppercase", letterSpacing: ".08em", whiteSpace: "nowrap" }}>
+        {children}
+      </span>
+      <div style={{ flex: 1, height: 1, background: C.line }} />
+    </div>
+  )
+}
+
+/* ── Circular Progress ─────────────────────────────────────────── */
+function CircleProgress({ pct, size = 108 }) {
+  const sw = 9, r = (size - sw) / 2
+  const circ = 2 * Math.PI * r
+  const offset = circ * (1 - Math.min(pct, 100) / 100)
+  const id = `cgr-${pct}`
+  return (
+    <div style={{ position: "relative", width: size, height: size, flexShrink: 0 }}>
+      <svg width={size} height={size} style={{ transform: "rotate(-90deg)", display: "block" }}>
+        <defs>
+          <linearGradient id={id} x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor={C.accent} />
+            <stop offset="100%" stopColor={C.purple} />
+          </linearGradient>
+        </defs>
+        <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={C.grid} strokeWidth={sw} />
+        <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={`url(#${id})`}
+          strokeWidth={sw} strokeDasharray={circ} strokeDashoffset={offset} strokeLinecap="round" />
+      </svg>
+      <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+        <div style={{ fontSize: 21, fontWeight: 900, letterSpacing: "-0.5px", color: C.ink, lineHeight: 1 }}>{pct}%</div>
+        <div style={{ fontSize: 9, color: C.muted, marginTop: 3 }}>achieved</div>
+      </div>
+    </div>
+  )
 }
 
 const KPI_ICONS = {
@@ -79,28 +98,15 @@ const KPI_ICONS = {
 
 /* ── KPI Stat Card ─────────────────────────────────────────────── */
 function KpiCard({ stat }) {
-  const sparkData = (stat.spark ?? []).map((v) => ({ v }))
   const color = stat.color ?? C.accent
-
   return (
-    <div
-      className="card"
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        padding: "14px 16px 12px",
-        gap: 0,
-      }}
-    >
+    <div className="card" style={{ display: "flex", flexDirection: "column", padding: "14px 16px 13px", gap: 0 }}>
       {/* label + icon */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 }}>
-        <span style={{ fontSize: 11.5, color: C.muted, fontWeight: 500, lineHeight: 1.35 }}>
-          {stat.label}
-        </span>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+        <span style={{ fontSize: 11, color: C.muted, fontWeight: 500 }}>{stat.label}</span>
         <div style={{
-          width: 30, height: 30, borderRadius: 8, flexShrink: 0,
-          background: `${color}1A`,
-          color,
+          width: 32, height: 32, borderRadius: 10, flexShrink: 0,
+          background: `${color}14`, color,
           display: "flex", alignItems: "center", justifyContent: "center",
         }}>
           {KPI_ICONS[stat.iconType]}
@@ -108,18 +114,17 @@ function KpiCard({ stat }) {
       </div>
 
       {/* value */}
-      <div style={{ fontSize: 23, fontWeight: 800, letterSpacing: "-0.5px", color: C.ink, marginBottom: 8 }}>
+      <div style={{ fontSize: 26, fontWeight: 900, letterSpacing: "-0.8px", color: C.ink, marginBottom: 9, lineHeight: 1 }}>
         {stat.value}
       </div>
 
-      {/* trend pill + vs — one line */}
+      {/* trend pill + vs */}
       <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
         <span style={{
           display: "inline-flex", alignItems: "center", gap: 3,
-          background: stat.up ? `${C.good}18` : `${C.danger}18`,
+          background: stat.up ? `${C.good}15` : `${C.danger}12`,
           color: stat.up ? C.good : C.danger,
-          fontWeight: 700, fontSize: 10.5,
-          padding: "2px 7px", borderRadius: 20,
+          fontWeight: 700, fontSize: 10.5, padding: "2px 7px", borderRadius: 20,
         }}>
           {stat.up ? "↑" : "↓"} {stat.change}{stat.noPercent ? "" : "%"}
         </span>
@@ -132,38 +137,21 @@ function KpiCard({ stat }) {
 /* ── Sales Performance Metric Box ──────────────────────────────── */
 function PerfMetric({ iconColor, icon, label, value }) {
   return (
-    <div
-      style={{
-        flex: 1,
-        background: "rgba(236,238,243,0.55)",
-        borderRadius: 10,
-        padding: "10px 12px",
-        display: "flex",
-        flexDirection: "column",
-        gap: 6,
-      }}
-    >
-      <div
-        style={{
-          width: 28,
-          height: 28,
-          borderRadius: 8,
-          background: `${iconColor}1A`,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        {icon}
-      </div>
-      <div style={{ fontSize: 10.5, color: C.muted, fontWeight: 500 }}>
-        {label}
-      </div>
-      <div style={{ fontSize: 15, fontWeight: 800, letterSpacing: "-0.3px" }}>
-        {value}
-      </div>
+    <div style={{
+      flex: 1, borderRadius: 10, padding: "10px 12px",
+      background: "rgba(241,245,249,.8)",
+      border: "1px solid rgba(226,232,240,.7)",
+      display: "flex", flexDirection: "column", gap: 4,
+    }}>
+      <div style={{
+        width: 26, height: 26, borderRadius: 7,
+        background: `${iconColor}18`,
+        display: "flex", alignItems: "center", justifyContent: "center",
+      }}>{icon}</div>
+      <div style={{ fontSize: 10, color: C.muted, fontWeight: 500, marginTop: 2 }}>{label}</div>
+      <div style={{ fontSize: 14.5, fontWeight: 800, letterSpacing: "-0.3px", color: C.ink }}>{value}</div>
     </div>
-  );
+  )
 }
 
 /* ── Dashboard V2 ──────────────────────────────────────────────── */
@@ -210,82 +198,51 @@ export default function DashboardV2() {
         ))}
       </div>
 
-      {/* ── Row 2: Sales Performance (4) | Sales Pipeline (3) | Product Performance (5) ── */}
+      {/* ── Row 2: Sales Performance | Sales Pipeline | Product Performance ── */}
       <div className="dash-perf-scroll">
       <div className="grid dash-grid-perf dash-row-equal">
         {/* Sales Performance */}
         <div>
         <ChartCard title="Sales Performance" sub="Target and achievement overview">
           <div className="dash-card-body">
-          <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
-            <PerfMetric
-              iconColor={C.accent}
-              label="Target"
-              value={salesPerformance.target}
-              icon={<Target size={14} color={C.accent} strokeWidth={2.5} />}
-            />
-            <PerfMetric
-              iconColor={C.good}
-              label="Achievement"
-              value={salesPerformance.achievement}
-              icon={<CircleCheck size={14} color={C.good} strokeWidth={2.5} />}
-            />
-            <PerfMetric
-              iconColor={C.purple}
-              label="Revenue"
-              value={salesPerformance.revenue}
-              icon={<BarChart3 size={14} color={C.purple} strokeWidth={2.5} />}
-            />
-          </div>
-          <div style={{ marginBottom: 6 }}>
-            {/* Label + value */}
-            <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 8 }}>
-              <span style={{ fontSize: 10.5, color: C.muted, fontWeight: 600, textTransform: "uppercase", letterSpacing: ".4px" }}>Achievement %</span>
-              <span style={{ fontSize: 10, color: C.muted }}>Target: 100%</span>
+            <div style={{ display: "flex", gap: 7, marginBottom: 14 }}>
+              <PerfMetric iconColor={C.accent} label="Target" value={salesPerformance.target}
+                icon={<Target size={13} color={C.accent} strokeWidth={2.5} />} />
+              <PerfMetric iconColor={C.good} label="Achievement" value={salesPerformance.achievement}
+                icon={<CircleCheck size={13} color={C.good} strokeWidth={2.5} />} />
+              <PerfMetric iconColor={C.purple} label="Revenue" value={salesPerformance.revenue}
+                icon={<BarChart3 size={13} color={C.purple} strokeWidth={2.5} />} />
             </div>
-            <div style={{ fontSize: 28, fontWeight: 900, letterSpacing: "-1px", marginBottom: 10, color: C.ink }}>
+
+            <div style={{ fontSize: 32, fontWeight: 900, letterSpacing: "-1.5px", color: C.ink, lineHeight: 1, marginBottom: 10 }}>
               {salesPerformance.achievementPct}%
+              <span style={{ fontSize: 12, fontWeight: 500, color: C.muted, letterSpacing: 0, marginLeft: 6 }}>achievement</span>
             </div>
 
-            {/* Stacked comparison bars */}
-            <div style={{ display: "flex", flexDirection: "column", gap: 5, marginBottom: 10 }}>
-              {/* This month */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
               <div>
-                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
-                  <span style={{ fontSize: 9.5, color: C.muted }}>This month</span>
-                  <span style={{ fontSize: 9.5, fontWeight: 700, color: C.ink }}>{salesPerformance.achievementPct}%</span>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+                  <span style={{ fontSize: 10, color: C.muted }}>This month</span>
+                  <span style={{ fontSize: 10, fontWeight: 700, color: C.ink }}>{salesPerformance.achievementPct}%</span>
                 </div>
-                <div style={{ height: 7, background: "#EAF0F6", borderRadius: 6, overflow: "hidden", position: "relative" }}>
-                  <div style={{
-                    width: `${salesPerformance.achievementPct}%`, height: "100%", borderRadius: 6,
-                    background: `linear-gradient(90deg, ${C.primary400}, ${C.accent})`,
-                  }} />
+                <div style={{ height: 6, background: C.grid, borderRadius: 3, overflow: "hidden" }}>
+                  <div style={{ width: `${salesPerformance.achievementPct}%`, height: "100%", borderRadius: 3, background: C.accent }} />
                 </div>
               </div>
-              {/* Last month */}
               <div>
-                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
-                  <span style={{ fontSize: 9.5, color: C.muted }}>{salesPerformance.comparisonLabel}</span>
-                  <span style={{ fontSize: 9.5, fontWeight: 700, color: C.muted }}>{salesPerformance.lastMonthPct}%</span>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+                  <span style={{ fontSize: 10, color: C.muted }}>{salesPerformance.comparisonLabel}</span>
+                  <span style={{ fontSize: 10, fontWeight: 700, color: C.muted }}>{salesPerformance.lastMonthPct}%</span>
                 </div>
-                <div style={{ height: 7, background: "#EAF0F6", borderRadius: 6, overflow: "hidden" }}>
-                  <div style={{
-                    width: `${salesPerformance.lastMonthPct}%`, height: "100%", borderRadius: 6,
-                    background: `linear-gradient(90deg, ${C.purple}, #C084FC)`,
-                  }} />
+                <div style={{ height: 6, background: C.grid, borderRadius: 3, overflow: "hidden" }}>
+                  <div style={{ width: `${salesPerformance.lastMonthPct}%`, height: "100%", borderRadius: 3, background: C.line }} />
                 </div>
               </div>
             </div>
 
-            {/* Change badge */}
-            <span style={{
-              display: "inline-flex", alignItems: "center", gap: 3,
-              background: `${C.good}18`, color: C.good,
-              fontWeight: 700, fontSize: 10.5, padding: "3px 8px", borderRadius: 20,
-            }}>
+            <div style={{ marginTop: 10, fontSize: 10.5, color: C.good, fontWeight: 600 }}>
               ↑ {salesPerformance.changePct}% vs {salesPerformance.comparisonLabel}
-            </span>
-          </div>
+            </div>
           </div>
         </ChartCard>
         </div>
@@ -422,7 +379,7 @@ export default function DashboardV2() {
       </div>
       </div>
 
-      {/* ── Row 4: Department wise Project (5) | Project Cost vs. Revenue (7) ── */}
+      {/* ── Row 3: Department wise Project | Project Cost vs. Revenue ── */}
       <div className="grid dash-grid-dept-cost" style={{ marginBottom: 10 }}>
         <ChartCard title="Department wise Project" sub={deptWiseProject.subtitle}>
           <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
